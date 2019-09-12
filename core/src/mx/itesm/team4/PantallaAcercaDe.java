@@ -61,6 +61,7 @@ class PantallaAcercaDe implements Screen {
 
         escenaAD.addActor(btnRegreso);
 
+
         Gdx.input.setInputProcessor(escenaAD);
     }
 
