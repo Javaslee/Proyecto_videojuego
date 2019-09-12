@@ -56,7 +56,7 @@ class PantallaMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
-                //juego.setScreen(new PantallaSpaceInvaders(juego));
+                inicio.setScreen(new PantallaNiveles(inicio));
             }
         });
 
