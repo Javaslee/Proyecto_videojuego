@@ -29,9 +29,16 @@ public class PantallaNiv1 implements Screen {
     private Texture texturaFondo;
 
 
-    //escena de menu (botones)
-    private Stage escenaMenu;
+    //escena Hud()
+    private Stage botonesHud;
 
+    //personaje
+    private Personaje personaje;
+    private Movimiento estadoPersonaje = Movimiento.QUIETO;
+
+    //personaje timers animación
+    private float timerPaso=0f;
+    private float MAX_PASO=0.4f;
 
     public PantallaNiv1(Inicio inicio) {
         this.inicio=inicio;
@@ -41,31 +48,79 @@ public class PantallaNiv1 implements Screen {
     public void show() {
         configurarVista();
         cargarTexturas();
-        crearMenu();
+        crearHud();
+        crearPersonaje();
     }
 
-    private void crearMenu() {
-        escenaMenu=new Stage(vista);
-        //boton Inicio Juego
+    private void crearPersonaje() {
+        Texture texturaIzAd= new Texture("Personaje_003.png");
+        Texture texturaDeAd= new Texture("Personaje_002.png");
+        personaje=new Personaje(texturaIzAd,texturaDeAd,0,inicio.ALTO/2-29);
+    }
+
+    private void crearHud() {
+        botonesHud =new Stage(vista);
+        botonesHud =new Stage(vista);
+
+        //boton Regreso Juego
         TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
         TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
         ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
         btnRegreso.setPosition(0,inicio.ALTO-btnRegresar.getMinHeight());
         //Siguientes Botones
-        //Evento boton
+        //Evento boton regreso
         btnRegreso.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
-                inicio.setScreen(new PantallaMenu(inicio));
+                inicio.setScreen(new PantallaNiveles(inicio));
 
             }
         });
+        botonesHud.addActor(btnRegreso);
 
-        escenaMenu.addActor(btnRegreso);
+        //botones izquierda-derecha
+        TextureRegionDrawable trdDerecha = new TextureRegionDrawable(new TextureRegion(new Texture("flechaDerecha.png")));
+        TextureRegionDrawable trdIzquierda  = new TextureRegionDrawable(new TextureRegion(new Texture("flechaIzquierda.png")));
+        ImageButton  btnDerecha = new ImageButton(trdDerecha);
+        ImageButton  btnIzquierda = new ImageButton(trdIzquierda);
+        btnDerecha.setPosition(btnDerecha.getWidth()  ,0);
+        btnIzquierda.setPosition( 0,0);
 
-        Gdx.input.setInputProcessor(escenaMenu);
+        //Listeners
+        btnDerecha.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                estadoPersonaje = Movimiento.DERECHA;
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                estadoPersonaje = Movimiento.QUIETO;
+            }
+
+
+        });
+
+        btnIzquierda.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                estadoPersonaje = Movimiento.IZQUIERDA;
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                estadoPersonaje = Movimiento.QUIETO;
+            }
+        });
+
+
+
+        botonesHud.addActor(btnDerecha);
+        botonesHud.addActor(btnIzquierda);
+
+        Gdx.input.setInputProcessor(botonesHud);
     }
 
     private void cargarTexturas() {
@@ -84,15 +139,36 @@ public class PantallaNiv1 implements Screen {
 
     @Override
     public void render(float delta) {
+
+        //actualizar personaje
+        atualizarPersonaje(delta);
         borrarPantalla();
         //batch
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
         batch.draw(texturaFondo,0,0);
+        personaje.draw(batch);
         batch.end();
 
-        escenaMenu.draw();
+        botonesHud.draw();
+        botonesHud.draw();
+    }
+
+    private void atualizarPersonaje(float delta) {
+        timerPaso+=delta;
+        if (timerPaso>MAX_PASO) {
+            timerPaso=0;
+            personaje.cambiarImagen();
+        }
+        switch (estadoPersonaje){
+            case DERECHA:
+                personaje.mover(10);
+                break;
+            case IZQUIERDA:
+                personaje.mover(-10);
+                break;
+        }
     }
 
     private void borrarPantalla() {
@@ -124,6 +200,12 @@ public class PantallaNiv1 implements Screen {
     @Override
     public void dispose() {
         texturaFondo.dispose();//liberar memoria
+    }
+
+    private enum Movimiento{
+        QUIETO,
+        DERECHA,
+        IZQUIERDA
     }
 
 }
