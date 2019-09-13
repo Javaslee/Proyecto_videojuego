@@ -82,8 +82,9 @@ class PantallaNiveles implements Screen {
         TextureRegionDrawable botonNivel1=new TextureRegionDrawable(new TextureRegion(new Texture("nivel1.png")));
         TextureRegionDrawable btnNivel1Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel1_press.png")));
         ImageButton btnNivel1= new ImageButton(botonNivel1,btnNivel1Press);
-        btnNivel1.setPosition(50,200);
+        btnNivel1.setPosition(100,Inicio.ALTO/2);
 
+        //Evento boton nivel 1
         btnNivel1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -93,14 +94,13 @@ class PantallaNiveles implements Screen {
             }
         });
 
-        //Evento boton nivel 1
-
         //Boton nivel 2
         TextureRegionDrawable botonNivel2=new TextureRegionDrawable(new TextureRegion(new Texture("nivel2.png")));
         TextureRegionDrawable btnNivel2Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel2_press.png")));
         ImageButton btnNivel2= new ImageButton(botonNivel2,btnNivel2Press);
-        btnNivel2.setPosition(100,0);
+        btnNivel2.setPosition(600,Inicio.ALTO/2);
 
+        //Evento boton nivel 2
         btnNivel2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -110,14 +110,13 @@ class PantallaNiveles implements Screen {
             }
         });
 
-        //Evento boton nivel 2
-
         //Boton nivel 3
         TextureRegionDrawable botonNivel3=new TextureRegionDrawable(new TextureRegion(new Texture("nivel3.png")));
         TextureRegionDrawable btnNivel3Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel3_press.png")));
         ImageButton btnNivel3= new ImageButton(botonNivel3,btnNivel3Press);
-        btnNivel3.setPosition(0,100);
+        btnNivel3.setPosition(1000,Inicio.ALTO/2);
 
+        //Evento nivel 3
         btnNivel3.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -127,14 +126,13 @@ class PantallaNiveles implements Screen {
             }
         });
 
-        //Evento nivel 3
-
         //Boton nivel carrera
         TextureRegionDrawable botonNivelCarrera=new TextureRegionDrawable(new TextureRegion(new Texture("carrera.png")));
         TextureRegionDrawable btnNivelCarreraPress= new TextureRegionDrawable(new TextureRegion(new Texture("carrera_press.png")));
         ImageButton btnNivelCarrera= new ImageButton(botonNivelCarrera,btnNivelCarreraPress);
-        btnNivelCarrera.setPosition(100,100);
+        btnNivelCarrera.setPosition(Inicio.ANCHO/2-btnNivelCarrera.getMinWidth()/2,200);
 
+        //Evento nivel carrera
         btnNivelCarrera.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -143,10 +141,6 @@ class PantallaNiveles implements Screen {
                 inicio.setScreen(new PantallaMenu(inicio));
             }
         });
-
-        //Evento nivel carrera
-
-
 
         escenaNiv.addActor(btnRegreso);
         escenaNiv.addActor(btnNivel1);
