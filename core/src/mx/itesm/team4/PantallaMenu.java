@@ -27,6 +27,7 @@ class PantallaMenu implements Screen {
     //fondo
     private Texture texturaFondo;
 
+
     //escena de menu (botones)
     private Stage escenaMenu;
 
@@ -99,7 +100,7 @@ class PantallaMenu implements Screen {
     @Override
     public void render(float delta) {
         borrarPantalla();
-        //batch escala todo de acuerdo a la vista
+        //batch
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();

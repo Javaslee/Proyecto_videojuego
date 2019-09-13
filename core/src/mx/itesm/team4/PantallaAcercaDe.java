@@ -30,6 +30,10 @@ class PantallaAcercaDe implements Screen {
     //escena de menu (botones)
     private Stage escenaAD;
 
+    //texto Acerca de
+    private TextoSprite textoSprite;
+
+
     public PantallaAcercaDe(Inicio inicio) {
         this.inicio=inicio;
     }
@@ -39,6 +43,12 @@ class PantallaAcercaDe implements Screen {
         configurarVista();
         cargarTexturas();
         crearMenu();
+        crearTextoSprite();
+    }
+
+    private void crearTextoSprite() {
+        Texture texturaTexto = new Texture("textoAcercaDe.png");
+        textoSprite = new TextoSprite(texturaTexto,(inicio.ANCHO-texturaTexto.getWidth()-texturaTexto.getWidth()/2)+70,inicio.ALTO-texturaTexto.getHeight());
     }
 
     private void crearMenu() {
@@ -66,7 +76,7 @@ class PantallaAcercaDe implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo=new Texture("Fondo.png");
+        texturaFondo=new Texture("fondoAD.jpg");
     }
 
     private void configurarVista() {
@@ -87,6 +97,7 @@ class PantallaAcercaDe implements Screen {
 
         batch.begin();
         batch.draw(texturaFondo,0,0);
+        textoSprite.render(batch);
         batch.end();
 
         escenaAD.draw();
@@ -121,5 +132,6 @@ class PantallaAcercaDe implements Screen {
     @Override
     public void dispose() {
         texturaFondo.dispose();//liberar memoria
+
     }
 }
