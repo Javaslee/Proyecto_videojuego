@@ -25,8 +25,8 @@ class PantallaNiveles implements Screen {
     //batch
     private SpriteBatch batch;
 
-    //fondo
-    private Texture fondo;
+    //texturaFondo
+    private Texture texturaFondo;
 
     //escena de juego
     private Stage escenaNiv;
@@ -37,9 +37,11 @@ class PantallaNiveles implements Screen {
 
     @Override
     public void show() {
-        crearMenu();
-        cargarTexturas();
         configurarVista();
+        cargarTexturas();
+        crearMenu();
+
+
 
     }
 
@@ -54,7 +56,7 @@ class PantallaNiveles implements Screen {
     }
 
     private void cargarTexturas() {
-        fondo=new Texture("Fondo.png");
+        texturaFondo =new Texture("Fondo.png");
     }
 
     private void crearMenu() {
@@ -82,29 +84,65 @@ class PantallaNiveles implements Screen {
         ImageButton btnNivel1= new ImageButton(botonNivel1,btnNivel1Press);
         btnNivel1.setPosition(50,200);
 
+        btnNivel1.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //INSTRUCCIONES
+                inicio.setScreen(new PantallaMenu(inicio));
+            }
+        });
+
         //Evento boton nivel 1
 
         //Boton nivel 2
         TextureRegionDrawable botonNivel2=new TextureRegionDrawable(new TextureRegion(new Texture("nivel2.png")));
         TextureRegionDrawable btnNivel2Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel2_press.png")));
-        ImageButton btnNivel2= new ImageButton(botonNivel1,btnNivel1Press);
+        ImageButton btnNivel2= new ImageButton(botonNivel2,btnNivel2Press);
         btnNivel2.setPosition(100,0);
+
+        btnNivel2.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //INSTRUCCIONES
+                inicio.setScreen(new PantallaMenu(inicio));
+            }
+        });
 
         //Evento boton nivel 2
 
         //Boton nivel 3
         TextureRegionDrawable botonNivel3=new TextureRegionDrawable(new TextureRegion(new Texture("nivel3.png")));
         TextureRegionDrawable btnNivel3Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel3_press.png")));
-        ImageButton btnNivel3= new ImageButton(botonNivel1,btnNivel1Press);
+        ImageButton btnNivel3= new ImageButton(botonNivel3,btnNivel3Press);
         btnNivel3.setPosition(0,100);
+
+        btnNivel3.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //INSTRUCCIONES
+                inicio.setScreen(new PantallaMenu(inicio));
+            }
+        });
 
         //Evento nivel 3
 
         //Boton nivel carrera
-        TextureRegionDrawable botonNivelCarrera=new TextureRegionDrawable(new TextureRegion(new Texture("nivel1.png")));
-        TextureRegionDrawable btnNivelCarreraPress= new TextureRegionDrawable(new TextureRegion(new Texture("nivel1_press.png")));
-        ImageButton btnNivelCarrera= new ImageButton(botonNivel1,btnNivel1Press);
+        TextureRegionDrawable botonNivelCarrera=new TextureRegionDrawable(new TextureRegion(new Texture("carrera.png")));
+        TextureRegionDrawable btnNivelCarreraPress= new TextureRegionDrawable(new TextureRegion(new Texture("carrera_press.png")));
+        ImageButton btnNivelCarrera= new ImageButton(botonNivelCarrera,btnNivelCarreraPress);
         btnNivelCarrera.setPosition(100,100);
+
+        btnNivelCarrera.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //INSTRUCCIONES
+                inicio.setScreen(new PantallaMenu(inicio));
+            }
+        });
 
         //Evento nivel carrera
 
@@ -114,6 +152,7 @@ class PantallaNiveles implements Screen {
         escenaNiv.addActor(btnNivel1);
         escenaNiv.addActor(btnNivel2);
         escenaNiv.addActor(btnNivel3);
+        escenaNiv.addActor(btnNivelCarrera);
 
         Gdx.input.setInputProcessor(escenaNiv);
     }
@@ -125,7 +164,7 @@ class PantallaNiveles implements Screen {
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
-        batch.draw(fondo,0,0);
+        batch.draw(texturaFondo,0,0);
         batch.end();
 
         escenaNiv.draw();
@@ -159,6 +198,7 @@ class PantallaNiveles implements Screen {
 
     @Override
     public void dispose() {
+        texturaFondo.dispose();
 
     }
 }
