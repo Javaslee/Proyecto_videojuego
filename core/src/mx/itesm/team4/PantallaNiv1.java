@@ -36,6 +36,15 @@ public class PantallaNiv1 implements Screen {
     private Personaje personaje;
     private Movimiento estadoPersonaje = Movimiento.QUIETO;
 
+    //pistola
+    private Pistola pistola;
+    //enemigo
+    private Enemigo enemigo;
+    //moneda
+    private Coin moneda;
+    //moto
+    private Moto moto;
+
     //personaje timers animación
     private float timerPaso=0f;
     private float MAX_PASO=0.4f;
@@ -50,6 +59,30 @@ public class PantallaNiv1 implements Screen {
         cargarTexturas();
         crearHud();
         crearPersonaje();
+        crearPistola();
+        crearEnemigo();
+        crearMoneda();
+        crearMoto();
+    }
+
+    private void crearMoto() {
+        Texture texturaMoto=new Texture("moto.png");
+        moto=new Moto(texturaMoto, 30,inicio.ALTO/2-29);
+    }
+
+    private void crearMoneda() {
+        Texture texturaCoin=new Texture("Items.png");
+        moneda=new Coin(texturaCoin,inicio.ANCHO/5-30,inicio.ALTO/2-29);
+    }
+
+    private void crearEnemigo() {
+        Texture texturaEne=new Texture("Robot.png");
+        enemigo=new Enemigo(texturaEne,inicio.ANCHO/2-30,inicio.ALTO/2-29);
+    }
+
+    private void crearPistola() {
+        Texture texturaPis=new Texture("pistola.png");
+        pistola=new Pistola(texturaPis,inicio.ANCHO/3,inicio.ALTO/2-29);
     }
 
     private void crearPersonaje() {
@@ -149,6 +182,11 @@ public class PantallaNiv1 implements Screen {
         batch.begin();
         batch.draw(texturaFondo,0,0);
         personaje.draw(batch);
+        //pistola.draw(batch);
+        //enemigo.draw(batch);
+        //moneda.draw(batch);
+        //moto.draw(batch);
+
         batch.end();
 
         botonesHud.draw();
