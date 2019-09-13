@@ -89,7 +89,7 @@ class PantallaNiveles implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
-                inicio.setScreen(new PantallaMenu(inicio));
+                inicio.setScreen(new PantallaNiv1(inicio));
             }
         });
 

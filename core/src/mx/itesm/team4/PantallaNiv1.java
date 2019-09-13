@@ -15,7 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-class PantallaAcercaDe implements Screen {
+public class PantallaNiv1 implements Screen {
+
     private final Inicio inicio;
     //camara
     private OrthographicCamera camara;
@@ -27,14 +28,12 @@ class PantallaAcercaDe implements Screen {
     //fondo
     private Texture texturaFondo;
 
+
     //escena de menu (botones)
-    private Stage escenaAD;
-
-    //texto Acerca de
-    private TextoSprite textoSprite;
+    private Stage escenaMenu;
 
 
-    public PantallaAcercaDe(Inicio inicio) {
+    public PantallaNiv1(Inicio inicio) {
         this.inicio=inicio;
     }
 
@@ -43,17 +42,11 @@ class PantallaAcercaDe implements Screen {
         configurarVista();
         cargarTexturas();
         crearMenu();
-        crearTextoSprite();
-    }
-
-    private void crearTextoSprite() {
-        Texture texturaTexto = new Texture("textoAcercaDe.png");
-        textoSprite = new TextoSprite(texturaTexto,(inicio.ANCHO-texturaTexto.getWidth()-texturaTexto.getWidth()/2)+70,inicio.ALTO-texturaTexto.getHeight());
     }
 
     private void crearMenu() {
-        escenaAD=new Stage(vista);
-        //boton Regresar a Juego
+        escenaMenu=new Stage(vista);
+        //boton Inicio Juego
         TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
         TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
         ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
@@ -66,17 +59,17 @@ class PantallaAcercaDe implements Screen {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
                 inicio.setScreen(new PantallaMenu(inicio));
+
             }
         });
 
-        escenaAD.addActor(btnRegreso);
+        escenaMenu.addActor(btnRegreso);
 
-
-        Gdx.input.setInputProcessor(escenaAD);
+        Gdx.input.setInputProcessor(escenaMenu);
     }
 
     private void cargarTexturas() {
-        texturaFondo=new Texture("fondoAD.jpg");
+        texturaFondo=new Texture("Fondo.png");
     }
 
     private void configurarVista() {
@@ -92,15 +85,14 @@ class PantallaAcercaDe implements Screen {
     @Override
     public void render(float delta) {
         borrarPantalla();
-        //batch escala de acuerdo a la vista
+        //batch
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
         batch.draw(texturaFondo,0,0);
-        textoSprite.render(batch);
         batch.end();
 
-        escenaAD.draw();
+        escenaMenu.draw();
     }
 
     private void borrarPantalla() {
@@ -132,6 +124,6 @@ class PantallaAcercaDe implements Screen {
     @Override
     public void dispose() {
         texturaFondo.dispose();//liberar memoria
-
     }
+
 }
