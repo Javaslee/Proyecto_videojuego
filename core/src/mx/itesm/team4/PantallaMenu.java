@@ -77,8 +77,24 @@ class PantallaMenu implements Screen {
             }
         });
 
+        TextureRegionDrawable btnInst=new TextureRegionDrawable(new TextureRegion(new Texture("button_instrucciones.png")));
+        TextureRegionDrawable btnInstOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_instrucciones-pressed.png")));
+        ImageButton btnInicioInst= new ImageButton(btnInst,btnInstOprimido);
+        btnInicioInst.setPosition(inicio.ANCHO/2-btnInicioAcerca.getWidth()/2,(inicio.ALTO/2)-150);
+
+        btnInicioInst.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //INSTRUCCIONES
+                inicio.setScreen(new PantallaInstrucciones(inicio));
+
+            }
+        });
+
         escenaMenu.addActor(btnInicioJuego);
         escenaMenu.addActor(btnInicioAcerca);
+        escenaMenu.addActor(btnInicioInst);
 
         Gdx.input.setInputProcessor(escenaMenu);
     }
