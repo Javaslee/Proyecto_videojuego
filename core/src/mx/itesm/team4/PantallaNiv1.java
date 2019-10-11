@@ -24,7 +24,7 @@ public class PantallaNiv1 extends Pantalla {
     private Stage botonesHud;
     //personaje
     private Personaje personaje;
-    private Movimiento estadoPersonaje = Movimiento.QUIETO;
+    private EstadoJuego estadoJuego = EstadoJuego.Jugando;
 
     //pistola
     private Pistola pistola;
@@ -61,7 +61,7 @@ public class PantallaNiv1 extends Pantalla {
     }
 
     private void crearMoneda() {
-        Texture texturaCoin=new Texture("Items.png");
+        Texture texturaCoin=new Texture("Imagenes_Final/Moneda_00.png");
         moneda=new Coin(texturaCoin,ANCHO/5-30,ALTO/2-29);
     }
 
@@ -76,9 +76,9 @@ public class PantallaNiv1 extends Pantalla {
     }
 
     private void crearPersonaje() {
-        Texture texturaIzAd= new Texture("Personaje_003.png");
-        Texture texturaDeAd= new Texture("Personaje_002.png");
-        personaje=new Personaje(texturaIzAd,texturaDeAd,0,ALTO/2-29);
+        Texture texturaIzAd= new Texture("Imagenes_Final/Personaje_01.png");
+        //Texture texturaDeAd= new Texture("Personaje_002.png");
+        personaje=new Personaje(texturaIzAd,0,ALTO/2-29);
     }
 
     private void crearHud() {
@@ -102,45 +102,9 @@ public class PantallaNiv1 extends Pantalla {
             }
         });
         botonesHud.addActor(btnRegreso);
-
         //botones izquierda-derecha
-        TextureRegionDrawable trdDerecha = new TextureRegionDrawable(new TextureRegion(new Texture("flechaDerecha.png")));
-        TextureRegionDrawable trdIzquierda  = new TextureRegionDrawable(new TextureRegion(new Texture("flechaIzquierda.png")));
-        ImageButton  btnDerecha = new ImageButton(trdDerecha);
-        ImageButton  btnIzquierda = new ImageButton(trdIzquierda);
-        btnDerecha.setPosition(btnDerecha.getWidth()  ,0);
-        btnIzquierda.setPosition( 0,0);
-
         //Listeners
-        btnDerecha.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                estadoPersonaje = Movimiento.DERECHA;
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                estadoPersonaje = Movimiento.QUIETO;
-            }
 
-        });
-
-        btnIzquierda.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                estadoPersonaje = Movimiento.IZQUIERDA;
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                estadoPersonaje = Movimiento.QUIETO;
-            }
-        });
-
-
-
-        botonesHud.addActor(btnDerecha);
-        botonesHud.addActor(btnIzquierda);
 
         Gdx.input.setInputProcessor(botonesHud);
     }
@@ -185,18 +149,7 @@ public class PantallaNiv1 extends Pantalla {
 
     private void atualizarPersonaje(float delta) {
         timerPaso+=delta;
-        if (timerPaso>MAX_PASO) {
-            timerPaso=0;
-            personaje.cambiarImagen();
-        }
-        switch (estadoPersonaje){
-            case DERECHA:
-                personaje.mover(10);
-                break;
-            case IZQUIERDA:
-                personaje.mover(-10);
-                break;
-        }
+        personaje.mover(10);
     }
 
     @Override
@@ -224,11 +177,8 @@ public class PantallaNiv1 extends Pantalla {
     public void dispose() {
         texturaFondo.dispose();//liberar memoria
     }
-
-    private enum Movimiento{
-        QUIETO,
-        DERECHA,
-        IZQUIERDA
-    }
-
+private enum EstadoJuego{
+        Jugando,
+        Pausa
+ }
 }

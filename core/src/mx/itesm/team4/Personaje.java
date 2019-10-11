@@ -9,6 +9,13 @@ public class Personaje {
     private Texture texturaIzAd;
     private Texture texturaDeAd;
 
+    public Personaje(Texture texturaIzAd, float x, float y){
+        this.texturaDeAd=texturaDeAd;
+        this.texturaIzAd=texturaIzAd;
+        sprite=new Sprite(this.texturaIzAd);
+        sprite.setPosition(x, y);
+    }
+
     public Personaje(Texture texturaIzAd, Texture texturaDeAd, float x, float y){
         this.texturaDeAd=texturaDeAd;
         this.texturaIzAd=texturaIzAd;
