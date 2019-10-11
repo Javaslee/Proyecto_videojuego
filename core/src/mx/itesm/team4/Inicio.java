@@ -13,6 +13,6 @@ public class Inicio extends Game {
 
 	@Override
 	public void create () {
-		setScreen(new PantallaMenu(this));
+		setScreen(new PantallaTitulo(this));
 	}
 }

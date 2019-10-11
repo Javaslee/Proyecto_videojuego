@@ -15,15 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-class PantallaNiveles implements Screen {
+class PantallaNiveles extends Pantalla {
     private final Inicio inicio;
-
-    //camara
-    private OrthographicCamera camara;
-    private Viewport vista;
-
-    //batch
-    private SpriteBatch batch;
 
     //texturaFondo
     private Texture texturaFondo;
@@ -41,16 +34,14 @@ class PantallaNiveles implements Screen {
         cargarTexturas();
         crearMenu();
 
-
-
     }
 
     private void configurarVista() {
         camara=new OrthographicCamera();
-        camara.position.set(inicio.ANCHO/2, inicio.ALTO/2, 0);
+        camara.position.set(ANCHO/2, ALTO/2, 0);
         camara.update();
 
-        vista= new StretchViewport(inicio.ANCHO,inicio.ALTO, camara);
+        vista= new StretchViewport(ANCHO,ALTO, camara);
 
         batch= new SpriteBatch();
     }
@@ -82,7 +73,7 @@ class PantallaNiveles implements Screen {
         TextureRegionDrawable botonNivel1=new TextureRegionDrawable(new TextureRegion(new Texture("nivel1.png")));
         TextureRegionDrawable btnNivel1Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel1_press.png")));
         ImageButton btnNivel1= new ImageButton(botonNivel1,btnNivel1Press);
-        btnNivel1.setPosition(100,Inicio.ALTO/2);
+        btnNivel1.setPosition(100,ALTO/2);
 
         //Evento boton nivel 1
         btnNivel1.addListener(new ClickListener(){
@@ -98,7 +89,7 @@ class PantallaNiveles implements Screen {
         TextureRegionDrawable botonNivel2=new TextureRegionDrawable(new TextureRegion(new Texture("nivel2.png")));
         TextureRegionDrawable btnNivel2Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel2_press.png")));
         ImageButton btnNivel2= new ImageButton(botonNivel2,btnNivel2Press);
-        btnNivel2.setPosition(600,Inicio.ALTO/2);
+        btnNivel2.setPosition(600,ALTO/2);
 
         //Evento boton nivel 2
         btnNivel2.addListener(new ClickListener(){
@@ -114,7 +105,7 @@ class PantallaNiveles implements Screen {
         TextureRegionDrawable botonNivel3=new TextureRegionDrawable(new TextureRegion(new Texture("nivel3.png")));
         TextureRegionDrawable btnNivel3Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel3_press.png")));
         ImageButton btnNivel3= new ImageButton(botonNivel3,btnNivel3Press);
-        btnNivel3.setPosition(1000,Inicio.ALTO/2);
+        btnNivel3.setPosition(1000,ALTO/2);
 
         //Evento nivel 3
         btnNivel3.addListener(new ClickListener(){
@@ -130,7 +121,7 @@ class PantallaNiveles implements Screen {
         TextureRegionDrawable botonNivelCarrera=new TextureRegionDrawable(new TextureRegion(new Texture("carrera.png")));
         TextureRegionDrawable btnNivelCarreraPress= new TextureRegionDrawable(new TextureRegion(new Texture("carrera_press.png")));
         ImageButton btnNivelCarrera= new ImageButton(botonNivelCarrera,btnNivelCarreraPress);
-        btnNivelCarrera.setPosition(Inicio.ANCHO/2-btnNivelCarrera.getMinWidth()/2,200);
+        btnNivelCarrera.setPosition(ANCHO/2-btnNivelCarrera.getMinWidth()/2,200);
 
         //Evento nivel carrera
         btnNivelCarrera.addListener(new ClickListener(){
@@ -163,11 +154,6 @@ class PantallaNiveles implements Screen {
 
         escenaNiv.draw();
 
-    }
-
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override

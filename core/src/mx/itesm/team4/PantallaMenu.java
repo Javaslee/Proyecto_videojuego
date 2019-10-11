@@ -15,15 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-class PantallaMenu implements Screen {
+class PantallaMenu extends Pantalla {
     private final Inicio inicio;
-    //camara
-    private OrthographicCamera camara;
-    private Viewport vista;
-
-    //batch
-    private SpriteBatch batch;
-
     //fondo
     private Texture texturaFondo;
 
@@ -49,7 +42,7 @@ class PantallaMenu implements Screen {
         TextureRegionDrawable btnJugar=new TextureRegionDrawable(new TextureRegion(new Texture("button_juego.png")));
         TextureRegionDrawable btnJugarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_juego_press.png")));
         ImageButton btnInicioJuego= new ImageButton(btnJugar,btnJugarOprimido);
-        btnInicioJuego.setPosition(inicio.ANCHO/2-btnInicioJuego.getWidth()/2,2*inicio.ALTO/3);
+        btnInicioJuego.setPosition(inicio.ANCHO/2-btnInicioJuego.getWidth()/2,2*ALTO/3);
         //Siguientes Botones
         //Evento boton
         btnInicioJuego.addListener(new ClickListener(){
@@ -62,6 +55,7 @@ class PantallaMenu implements Screen {
             }
         });
 
+        //boton acerca de
         TextureRegionDrawable btnAcerDe=new TextureRegionDrawable(new TextureRegion(new Texture("button_acerca-de.png")));
         TextureRegionDrawable btnAcerDeOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_acerca-de_pressed.png")));
         ImageButton btnInicioAcerca= new ImageButton(btnAcerDe,btnAcerDeOprimido);
@@ -77,6 +71,7 @@ class PantallaMenu implements Screen {
             }
         });
 
+        //instrucciones boton
         TextureRegionDrawable btnInst=new TextureRegionDrawable(new TextureRegion(new Texture("button_instrucciones.png")));
         TextureRegionDrawable btnInstOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_instrucciones-pressed.png")));
         ImageButton btnInicioInst= new ImageButton(btnInst,btnInstOprimido);
@@ -105,11 +100,9 @@ class PantallaMenu implements Screen {
 
     private void configurarVista() {
         camara=new OrthographicCamera();
-        camara.position.set(inicio.ANCHO/2, inicio.ALTO/2, 0);
+        camara.position.set(ANCHO/2, ALTO/2, 0);
         camara.update();
-
-        vista= new StretchViewport(inicio.ANCHO,inicio.ALTO, camara);
-
+        vista= new StretchViewport(ANCHO,ALTO, camara);
         batch= new SpriteBatch();
     }
 
@@ -125,18 +118,10 @@ class PantallaMenu implements Screen {
 
         escenaMenu.draw();
     }
-
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
-
     @Override
     public void resize(int width, int height) {
         vista.update(width, height);
-
     }
-
     @Override
     public void pause() {
 

@@ -15,23 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class PantallaNiv1 implements Screen {
+public class PantallaNiv1 extends Pantalla {
 
     private final Inicio inicio;
-    //camara
-    private OrthographicCamera camara;
-    private Viewport vista;
-
-    //batch
-    private SpriteBatch batch;
-
     //fondo
     private Texture texturaFondo;
-
-
     //escena Hud()
     private Stage botonesHud;
-
     //personaje
     private Personaje personaje;
     private Movimiento estadoPersonaje = Movimiento.QUIETO;
@@ -67,28 +57,28 @@ public class PantallaNiv1 implements Screen {
 
     private void crearMoto() {
         Texture texturaMoto=new Texture("moto.png");
-        moto=new Moto(texturaMoto, 30,inicio.ALTO/2-29);
+        moto=new Moto(texturaMoto, 30,ALTO/2-29);
     }
 
     private void crearMoneda() {
         Texture texturaCoin=new Texture("Items.png");
-        moneda=new Coin(texturaCoin,inicio.ANCHO/5-30,inicio.ALTO/2-29);
+        moneda=new Coin(texturaCoin,ANCHO/5-30,ALTO/2-29);
     }
 
     private void crearEnemigo() {
         Texture texturaEne=new Texture("Robot.png");
-        enemigo=new Enemigo(texturaEne,inicio.ANCHO/2-30,inicio.ALTO/2-29);
+        enemigo=new Enemigo(texturaEne,ANCHO/2-30,ALTO/2-29);
     }
 
     private void crearPistola() {
         Texture texturaPis=new Texture("pistola.png");
-        pistola=new Pistola(texturaPis,inicio.ANCHO/3,inicio.ALTO/2-29);
+        pistola=new Pistola(texturaPis,ANCHO/3,ALTO/2-29);
     }
 
     private void crearPersonaje() {
         Texture texturaIzAd= new Texture("Personaje_003.png");
         Texture texturaDeAd= new Texture("Personaje_002.png");
-        personaje=new Personaje(texturaIzAd,texturaDeAd,0,inicio.ALTO/2-29);
+        personaje=new Personaje(texturaIzAd,texturaDeAd,0,ALTO/2-29);
     }
 
     private void crearHud() {
@@ -99,7 +89,7 @@ public class PantallaNiv1 implements Screen {
         TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
         TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
         ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
-        btnRegreso.setPosition(0,inicio.ALTO-btnRegresar.getMinHeight());
+        btnRegreso.setPosition(0,ALTO-btnRegresar.getMinHeight());
         //Siguientes Botones
         //Evento boton regreso
         btnRegreso.addListener(new ClickListener(){
@@ -133,7 +123,6 @@ public class PantallaNiv1 implements Screen {
                 estadoPersonaje = Movimiento.QUIETO;
             }
 
-
         });
 
         btnIzquierda.addListener(new ClickListener(){
@@ -162,10 +151,10 @@ public class PantallaNiv1 implements Screen {
 
     private void configurarVista() {
         camara=new OrthographicCamera();
-        camara.position.set(inicio.ANCHO/2, inicio.ALTO/2, 0);
+        camara.position.set(ANCHO/2, ALTO/2, 0);
         camara.update();
 
-        vista= new StretchViewport(inicio.ANCHO,inicio.ALTO, camara);
+        vista= new StretchViewport(ANCHO,ALTO, camara);
 
         batch= new SpriteBatch();
     }
@@ -185,7 +174,8 @@ public class PantallaNiv1 implements Screen {
         //pistola.draw(batch);
         //enemigo.draw(batch);
         //moneda.draw(batch);
-        //moto.draw(batch);
+        //
+        // moto.draw(batch);
 
         batch.end();
 
@@ -207,11 +197,6 @@ public class PantallaNiv1 implements Screen {
                 personaje.mover(-10);
                 break;
         }
-    }
-
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override
