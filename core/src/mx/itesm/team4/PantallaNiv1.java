@@ -160,19 +160,10 @@ public class PantallaNiv1 extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
 
-        // this line doesn't make much sense, you've already incremented sourceX,
-        // "Gdx.graphics.getDeltaTime() / 3/4" especially confuses me
-        // why sourceX =% bg.getWidth(); isn't enough?
         sourceX = (sourceX)%texturaFondo.getWidth();
 
-        // you probably want to draw texture in full screen
-        batch.draw(texturaFondo,
-                // position and size of texture
-                0, 0, ANCHO, ALTO,
-                // srcX, srcY, srcWidth, srcHeight
-                (int) sourceX, 0, texturaFondo.getWidth(), texturaFondo.getHeight(),
-                // flipX, flipY
-                false, false);
+
+        batch.draw(texturaFondo, 0, 0, ANCHO, ALTO, (int) sourceX, 0, texturaFondo.getWidth(), texturaFondo.getHeight(), false, false);
         personaje.draw(batch);
         //pistola.draw(batch);
         //enemigo.draw(batch);
