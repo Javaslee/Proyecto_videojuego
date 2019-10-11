@@ -22,6 +22,8 @@ public class PantallaNiv1 extends Pantalla {
     private Texture texturaFondo;
     //escena Hud()
     private Stage botonesHud;
+    //escena pausa
+    private Stage botonesPausa;
     //personaje
     private Personaje personaje;
     private EstadoJuego estadoJuego = EstadoJuego.Jugando;
@@ -53,6 +55,32 @@ public class PantallaNiv1 extends Pantalla {
         crearEnemigo();
         crearMoneda();
         crearMoto();
+        crearPausa();
+    }
+
+    private void crearPausa() {
+        botonesPausa= new Stage(vista);
+        //boton Regreso Juego
+        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
+        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
+        ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
+        btnRegreso.setPosition(0,ALTO-btnRegresar.getMinHeight());
+
+        //Siguientes Botones
+
+        //Evento boton regreso
+        btnRegreso.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //INSTRUCCIONES
+                estadoJuego=EstadoJuego.Jugando;
+                Gdx.input.setInputProcessor(botonesHud);
+
+            }
+        });
+
+        botonesPausa.addActor(btnRegreso);
     }
 
     private void crearMoto() {
@@ -83,29 +111,23 @@ public class PantallaNiv1 extends Pantalla {
 
     private void crearHud() {
         botonesHud =new Stage(vista);
-        botonesHud =new Stage(vista);
+        TextureRegionDrawable btnPausa=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pausa_Boton_00.png")));
+        ImageButton btnPause= new ImageButton(btnPausa);
+        btnPause.setPosition(0, ALTO-btnPausa.getMinHeight());
 
-        //boton Regreso Juego
-        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
-        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
-        ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
-        btnRegreso.setPosition(0,ALTO-btnRegresar.getMinHeight());
-        //Siguientes Botones
-        //Evento boton regreso
-        btnRegreso.addListener(new ClickListener(){
+        //evento boton pausa
+
+        btnPause.addListener(new ClickListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //INSTRUCCIONES
-                inicio.setScreen(new PantallaNiveles(inicio));
-
+            public void clicked(InputEvent event, float x, float y){
+                super.clicked(event,x,y);
+                    estadoJuego=EstadoJuego.Pausa;
+                    Gdx.input.setInputProcessor(botonesPausa);
             }
         });
-        botonesHud.addActor(btnRegreso);
+        botonesHud.addActor(btnPause);
         //botones izquierda-derecha
         //Listeners
-
-
         Gdx.input.setInputProcessor(botonesHud);
     }
 
@@ -127,11 +149,12 @@ public class PantallaNiv1 extends Pantalla {
     public void render(float delta) {
 
         //actualizar personaje
-        atualizarPersonaje(delta);
+        if(estadoJuego==estadoJuego.Jugando) {
+            atualizarPersonaje(delta);
+        }
         borrarPantalla();
         //batch
         batch.setProjectionMatrix(camara.combined);
-
         batch.begin();
         batch.draw(texturaFondo,0,0);
         personaje.draw(batch);
@@ -142,9 +165,12 @@ public class PantallaNiv1 extends Pantalla {
         // moto.draw(batch);
 
         batch.end();
-
-        botonesHud.draw();
-        botonesHud.draw();
+        if(estadoJuego==estadoJuego.Jugando) {
+            botonesHud.draw();
+        }
+        else{
+            botonesPausa.draw();
+        }
     }
 
     private void atualizarPersonaje(float delta) {
