@@ -1,6 +1,7 @@
 package mx.itesm.team4;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -26,7 +27,6 @@ public class PantallaNiv1 extends Pantalla {
     private Stage botonesPausa;
     //personaje
     private Personaje personaje;
-    private EstadoJuego estadoJuego = EstadoJuego.Jugando;
 
     //pistola
     private Pistola pistola;
@@ -43,8 +43,12 @@ public class PantallaNiv1 extends Pantalla {
 
     float sourceX = 0;
 
+    //estados nuevos
+
+
     public PantallaNiv1(Inicio inicio) {
         this.inicio=inicio;
+        estadoJuego=estadoJuego.JugandoNivel;
     }
 
     @Override
@@ -76,9 +80,8 @@ public class PantallaNiv1 extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
-                estadoJuego=EstadoJuego.Jugando;
+                estadoJuego=EstadoJuego.JugandoNivel;
                 Gdx.input.setInputProcessor(botonesHud);
-
             }
         });
 
@@ -123,6 +126,7 @@ public class PantallaNiv1 extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event,x,y);
+                if(estadoJuego==estadoJuego.JugandoNivel)
                     estadoJuego=EstadoJuego.Pausa;
                     Gdx.input.setInputProcessor(botonesPausa);
             }
@@ -130,6 +134,13 @@ public class PantallaNiv1 extends Pantalla {
         botonesHud.addActor(btnPause);
         //botones izquierda-derecha
         //Listeners
+        botonesHud.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                personaje.saltar(10);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
         Gdx.input.setInputProcessor(botonesHud);
     }
 
@@ -151,7 +162,7 @@ public class PantallaNiv1 extends Pantalla {
     public void render(float delta) {
 
         //actualizar personaje
-        if(estadoJuego==estadoJuego.Jugando) {
+        if(estadoJuego==estadoJuego.JugandoNivel) {
             atualizarPersonaje(delta);
         }
         borrarPantalla();
@@ -171,7 +182,7 @@ public class PantallaNiv1 extends Pantalla {
         //
         // moto.draw(batch);
         batch.end();
-        if(estadoJuego==estadoJuego.Jugando) {
+        if(estadoJuego==estadoJuego.JugandoNivel) {
             botonesHud.draw();
         }
         else{
@@ -181,7 +192,7 @@ public class PantallaNiv1 extends Pantalla {
 
     private void atualizarPersonaje(float delta) {
         timerPaso+=delta;
-        personaje.mover(10);
+        personaje.mover(0);
     }
 
     @Override
@@ -209,8 +220,4 @@ public class PantallaNiv1 extends Pantalla {
     public void dispose() {
         texturaFondo.dispose();//liberar memoria
     }
-private enum EstadoJuego{
-        Jugando,
-        Pausa
- }
 }

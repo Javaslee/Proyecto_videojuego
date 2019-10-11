@@ -18,6 +18,8 @@ public abstract class Pantalla implements Screen {
     protected Viewport vista;
     // Todas las pantallas dibujan algo :)
     protected SpriteBatch batch;
+    //enum de estado de juego
+    protected EstadoJuego estadoJuego=EstadoJuego.Jugando;
 
     public Pantalla() {
         // Crea la cámara con las dimensiones del mundo
@@ -38,10 +40,14 @@ public abstract class Pantalla implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
-    // Borra la pantalla con el color RGB (r,g,b)
+    // Borra la pantalla con el color RGB (r,g,b,a)
     protected void borrarPantalla(float r, float g, float b) {
         Gdx.gl.glClearColor(r,g,b,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
-
+    protected enum EstadoJuego{
+        Jugando,
+        Pausa,
+        JugandoNivel
+    }
 }

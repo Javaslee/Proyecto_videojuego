@@ -26,6 +26,7 @@ public class Personaje {
     public void mover(float dx){
         sprite.setX(sprite.getX()+dx);
     }
+    public void saltar(float dy){ sprite.setY(sprite.getY()+dy); }
 
     public void draw(SpriteBatch batch){
         sprite.draw(batch);
@@ -38,5 +39,9 @@ public class Personaje {
         else {
             sprite.setTexture(texturaIzAd);
         }
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }
