@@ -1,7 +1,6 @@
 package mx.itesm.team4;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,39 +15,30 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class PantallaNiv1 extends Pantalla {
+import static mx.itesm.team4.Inicio.ALTO;
 
-    private final Inicio inicio;
-    //fondo
+class PantallaCamara implements Screen {
+    private final Inicio juego;
+    private OrthographicCamera camera;
+    private Viewport vista;
+    //Fondo
     private Texture texturaFondo;
-    //escena Hud()
+
+    private SpriteBatch batch;
+    //Escena HUD
     private Stage botonesHud;
-    //escena pausa
     private Stage botonesPausa;
-    //personaje
+    //Mover Fondo
+    private float xTexturaFondo = 1;
+    private float xTexturaFondoDos =2;
+
+    //Personaje
     private Personaje personaje;
-
-    //pistola
-    private Pistola pistola;
-    //enemigo
-    private Enemigo enemigo;
-    //moneda
-    private Coin moneda;
-    //moto
-    private Moto moto;
-
-    //personaje timers animación
-    private float timerPaso=0f;
-    private float MAX_PASO=0.4f;
-
-    float sourceX = 0;
-
-    //estados nuevos
+    private EstadoJuego estadoJuego = EstadoJuego.Jugando;
 
 
-    public PantallaNiv1(Inicio inicio) {
-        this.inicio=inicio;
-        estadoJuego=estadoJuego.JugandoNivel;
+    public PantallaCamara(Inicio juego) {
+        this.juego = juego;
     }
 
     @Override
@@ -57,11 +47,8 @@ public class PantallaNiv1 extends Pantalla {
         cargarTexturas();
         crearHud();
         crearPersonaje();
-        crearPistola();
-        crearEnemigo();
-        crearMoneda();
-        crearMoto();
         crearPausa();
+
     }
 
     private void crearPausa() {
@@ -80,32 +67,13 @@ public class PantallaNiv1 extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
-                estadoJuego=EstadoJuego.JugandoNivel;
+                estadoJuego= EstadoJuego.Jugando;
                 Gdx.input.setInputProcessor(botonesHud);
+
             }
         });
 
         botonesPausa.addActor(btnRegreso);
-    }
-
-    private void crearMoto() {
-        Texture texturaMoto=new Texture("moto.png");
-        moto=new Moto(texturaMoto, 30,ALTO/2-29);
-    }
-
-    private void crearMoneda() {
-        Texture texturaCoin=new Texture("Imagenes_Final/Moneda_00.png");
-        moneda=new Coin(texturaCoin,ANCHO/5-30,ALTO/2-29);
-    }
-
-    private void crearEnemigo() {
-        Texture texturaEne=new Texture("Robot.png");
-        enemigo=new Enemigo(texturaEne,ANCHO/2-30,ALTO/2-29);
-    }
-
-    private void crearPistola() {
-        Texture texturaPis=new Texture("pistola.png");
-        pistola=new Pistola(texturaPis,ANCHO/3,ALTO/2-29);
     }
 
     private void crearPersonaje() {
@@ -126,73 +94,64 @@ public class PantallaNiv1 extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event,x,y);
-                if(estadoJuego==estadoJuego.JugandoNivel)
-                    estadoJuego=EstadoJuego.Pausa;
-                    Gdx.input.setInputProcessor(botonesPausa);
+                estadoJuego= EstadoJuego.Pausa;
+                Gdx.input.setInputProcessor(botonesPausa);
             }
         });
         botonesHud.addActor(btnPause);
         //botones izquierda-derecha
         //Listeners
-        botonesHud.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                personaje.saltar(10);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
         Gdx.input.setInputProcessor(botonesHud);
     }
 
+
     private void cargarTexturas() {
-        texturaFondo=new Texture("Fondo.png");
+        texturaFondo = new Texture("Fondo Largo.png");
     }
 
     private void configurarVista() {
-        camara=new OrthographicCamera();
-        camara.position.set(ANCHO/2, ALTO/2, 0);
-        camara.update();
+        camera = new OrthographicCamera();
+        camera.position.set(juego.ANCHO/2, ALTO/2,0);
+        camera.update();
 
-        vista= new StretchViewport(ANCHO,ALTO, camara);
+        vista =  new StretchViewport(juego.ANCHO, ALTO, camera);
+        batch = new SpriteBatch();
 
-        batch= new SpriteBatch();
     }
 
     @Override
     public void render(float delta) {
-
-        //actualizar personaje
-        if(estadoJuego==estadoJuego.JugandoNivel) {
-            atualizarPersonaje(delta);
-        }
+        actualizarCamara();
         borrarPantalla();
-        //batch
-        sourceX += 20;
-        batch.setProjectionMatrix(camara.combined);
+
+        // Batch escala de acuerdo a la vista/camara
+        batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
-
-        sourceX = (sourceX)%texturaFondo.getWidth();
-
-
-        batch.draw(texturaFondo, 0, 0, ANCHO, ALTO, (int) sourceX, 0, texturaFondo.getWidth(), texturaFondo.getHeight(), false, false);
+        batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondo - 1),0);
+        batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
         personaje.draw(batch);
-        //pistola.draw(batch);
-        //enemigo.draw(batch);
-        //moneda.draw(batch);
-        //
-        // moto.draw(batch);
+
         batch.end();
-        if(estadoJuego==estadoJuego.JugandoNivel) {
-            botonesHud.draw();
-        }
-        else{
-            botonesPausa.draw();
-        }
+
+
     }
 
-    private void atualizarPersonaje(float delta) {
-        timerPaso+=delta;
-        personaje.mover(0);
+    private void actualizarCamara() {
+        //camera.position.x+= 2;
+        camera.update();
+        if(camera.position.x-juego.ANCHO/2>texturaFondo.getWidth()*xTexturaFondo){
+            xTexturaFondo+=2;
+        }
+        if(camera.position.x-juego.ANCHO/2>texturaFondo.getWidth()*xTexturaFondoDos){
+            xTexturaFondoDos+=2;
+        }
+
+    }
+
+    private void borrarPantalla() {
+        Gdx.gl.glClearColor(1,1,1,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override
@@ -213,11 +172,12 @@ public class PantallaNiv1 extends Pantalla {
 
     @Override
     public void hide() {
-        dispose();
+
     }
 
     @Override
     public void dispose() {
-        texturaFondo.dispose();//liberar memoria
+        texturaFondo.dispose();
+
     }
 }

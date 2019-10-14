@@ -9,6 +9,13 @@ public class Personaje {
     private Texture texturaIzAd;
     private Texture texturaDeAd;
 
+    public Personaje(Texture texturaIzAd, float x, float y){
+        this.texturaDeAd=texturaDeAd;
+        this.texturaIzAd=texturaIzAd;
+        sprite=new Sprite(this.texturaIzAd);
+        sprite.setPosition(x, y);
+    }
+
     public Personaje(Texture texturaIzAd, Texture texturaDeAd, float x, float y){
         this.texturaDeAd=texturaDeAd;
         this.texturaIzAd=texturaIzAd;
@@ -19,6 +26,7 @@ public class Personaje {
     public void mover(float dx){
         sprite.setX(sprite.getX()+dx);
     }
+    public void saltar(float dy){ sprite.setY(sprite.getY()+dy); }
 
     public void draw(SpriteBatch batch){
         sprite.draw(batch);
@@ -31,5 +39,9 @@ public class Personaje {
         else {
             sprite.setTexture(texturaIzAd);
         }
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }
