@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static mx.itesm.team4.Inicio.ALTO;
 
-class PantallaCamara extends Pantalla {
+class PantallaCamara extends Pantalla{
     private final Inicio juego;
     private OrthographicCamera camera;
     private Viewport vista;
@@ -69,6 +69,7 @@ class PantallaCamara extends Pantalla {
                 //INSTRUCCIONES
                 estadoJuego= EstadoJuego.Jugando;
                 Gdx.input.setInputProcessor(botonesHud);
+
             }
         });
 
@@ -93,13 +94,20 @@ class PantallaCamara extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event,x,y);
-                estadoJuego= EstadoJuego.Pausa;
-                Gdx.input.setInputProcessor(botonesPausa);
+                if(estadoJuego==estadoJuego.JugandoNivel){
+                    estadoJuego=estadoJuego.Pausa;
+                    Gdx.input.setInputProcessor(botonesPausa);
+                }
             }
         });
         botonesHud.addActor(btnPause);
-        //botones izquierda-derecha
-        //Listeners
+        botonesHud.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                personaje.saltar(10);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
         Gdx.input.setInputProcessor(botonesHud);
     }
 
@@ -121,9 +129,8 @@ class PantallaCamara extends Pantalla {
     @Override
     public void render(float delta) {
         if(estadoJuego==estadoJuego.JugandoNivel) {
-            atualizarPersonaje(delta);
+            actualizarPersonaje(delta);
         }
-
         actualizarCamara();
         borrarPantalla();
 
@@ -140,7 +147,7 @@ class PantallaCamara extends Pantalla {
 
     }
 
-    private void atualizarPersonaje(float delta) {
+    private void actualizarPersonaje(float delta) {
         personaje.mover(2);
     }
 
