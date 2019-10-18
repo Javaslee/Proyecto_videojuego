@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static mx.itesm.team4.Inicio.ALTO;
 
-class PantallaCamara implements Screen {
+class PantallaCamara extends Pantalla {
     private final Inicio juego;
     private OrthographicCamera camera;
     private Viewport vista;
@@ -34,7 +34,7 @@ class PantallaCamara implements Screen {
 
     //Personaje
     private Personaje personaje;
-    private EstadoJuego estadoJuego = EstadoJuego.Jugando;
+    private EstadoJuego estadoJuego = EstadoJuego.JugandoNivel;
 
 
     public PantallaCamara(Inicio juego) {
@@ -69,7 +69,6 @@ class PantallaCamara implements Screen {
                 //INSTRUCCIONES
                 estadoJuego= EstadoJuego.Jugando;
                 Gdx.input.setInputProcessor(botonesHud);
-
             }
         });
 
@@ -121,6 +120,10 @@ class PantallaCamara implements Screen {
 
     @Override
     public void render(float delta) {
+        if(estadoJuego==estadoJuego.JugandoNivel) {
+            atualizarPersonaje(delta);
+        }
+
         actualizarCamara();
         borrarPantalla();
 
@@ -137,8 +140,12 @@ class PantallaCamara implements Screen {
 
     }
 
+    private void atualizarPersonaje(float delta) {
+        personaje.mover(2);
+    }
+
     private void actualizarCamara() {
-        //camera.position.x+= 2;
+        camera.position.x+= 2;
         camera.update();
         if(camera.position.x-juego.ANCHO/2>texturaFondo.getWidth()*xTexturaFondo){
             xTexturaFondo+=2;
@@ -147,11 +154,6 @@ class PantallaCamara implements Screen {
             xTexturaFondoDos+=2;
         }
 
-    }
-
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override

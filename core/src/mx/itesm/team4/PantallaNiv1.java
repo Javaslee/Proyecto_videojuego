@@ -192,7 +192,7 @@ public class PantallaNiv1 extends Pantalla {
 
     private void atualizarPersonaje(float delta) {
         timerPaso+=delta;
-        personaje.mover(0);
+        personaje.mover(2);
     }
 
     @Override
