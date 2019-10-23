@@ -37,6 +37,8 @@ class PantallaCamara extends Pantalla{
     private Personaje personaje;
     private EstadoJuego estadoJuego = EstadoJuego.JugandoNivel;
 
+    private JuegoStage PantallaCamara;
+
 
     public PantallaCamara(Inicio juego) {
         this.juego = juego;
@@ -49,9 +51,14 @@ class PantallaCamara extends Pantalla{
         crearHud();
         crearPersonaje();
         crearPausa();
+        crearElementosMundo();
 
 
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        //Gdx.input.setInputProcessor(new ProcesadorEntrada());
+    }
+
+    private void crearElementosMundo() {
+        PantallaCamara = new JuegoStage();
     }
 
     private void crearPausa() {
@@ -143,6 +150,8 @@ class PantallaCamara extends Pantalla{
         batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
 
         personaje.draw(batch);
+        PantallaCamara.draw();
+        PantallaCamara.act();
 
         batch.end();
         if(estadoJuego==estadoJuego.JugandoNivel) {
