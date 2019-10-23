@@ -53,7 +53,7 @@ class PantallaCamara extends Pantalla{
         crearPausa();
         crearElementosMundo();
 
-
+        //Este inputprocessor no dejaba que se mostrara el piso y el rectángulo, falta agregarle sprites :)
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
