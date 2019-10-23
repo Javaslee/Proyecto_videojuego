@@ -1,6 +1,7 @@
 package mx.itesm.team4;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -48,6 +49,9 @@ class PantallaCamara extends Pantalla{
         crearHud();
         crearPersonaje();
         crearPausa();
+
+
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
     private void crearPausa() {
@@ -70,7 +74,6 @@ class PantallaCamara extends Pantalla{
                 Gdx.input.setInputProcessor(botonesHud);
             }
         });
-
         botonesPausa.addActor(btnRegreso);
     }
 
@@ -99,14 +102,14 @@ class PantallaCamara extends Pantalla{
             }
         });
         botonesHud.addActor(btnPause);
-        botonesHud.addListener(new ClickListener(){
+      /*  botonesHud.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 personaje.saltar(10);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-        Gdx.input.setInputProcessor(botonesHud);
+        Gdx.input.setInputProcessor(botonesHud);*/
     }
 
 
@@ -192,5 +195,49 @@ class PantallaCamara extends Pantalla{
     public void dispose() {
         texturaFondo.dispose();
 
+    }
+
+    private class ProcesadorEntrada implements InputProcessor {
+        @Override
+        public boolean keyDown(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            personaje.saltar(50);
+            return true;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            personaje.saltar(-50);
+            return true;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
+        }
     }
 }
