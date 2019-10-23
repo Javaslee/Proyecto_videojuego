@@ -43,6 +43,10 @@ public class PantallaNiv1 extends Pantalla {
 
     float sourceX = 0;
 
+    //Elementos de box2d
+
+    private JuegoStage PantallaNiv1;
+
     //estados nuevos
 
 
@@ -62,6 +66,11 @@ public class PantallaNiv1 extends Pantalla {
         crearMoneda();
         crearMoto();
         crearPausa();
+        crearElementosMundo();
+    }
+
+    private void crearElementosMundo() {
+        PantallaNiv1 = new JuegoStage();
     }
 
     private void crearPausa() {
@@ -145,7 +154,7 @@ public class PantallaNiv1 extends Pantalla {
     }
 
     private void cargarTexturas() {
-        texturaFondo=new Texture("Fondo.png");
+        texturaFondo=new Texture("Fondo Largo.png");
     }
 
     private void configurarVista() {
@@ -167,20 +176,15 @@ public class PantallaNiv1 extends Pantalla {
         }
         borrarPantalla();
         //batch
-        sourceX += 20;
-        batch.setProjectionMatrix(camara.combined);
-        batch.begin();
-
-        sourceX = (sourceX)%texturaFondo.getWidth();
-
-
-        batch.draw(texturaFondo, 0, 0, ANCHO, ALTO, (int) sourceX, 0, texturaFondo.getWidth(), texturaFondo.getHeight(), false, false);
         personaje.draw(batch);
+        PantallaNiv1.draw();
+        PantallaNiv1.act();
         //pistola.draw(batch);
         //enemigo.draw(batch);
         //moneda.draw(batch);
         //
         // moto.draw(batch);
+
         batch.end();
         if(estadoJuego==estadoJuego.JugandoNivel) {
             botonesHud.draw();
@@ -188,6 +192,7 @@ public class PantallaNiv1 extends Pantalla {
         else{
             botonesPausa.draw();
         }
+
     }
 
     private void atualizarPersonaje(float delta) {

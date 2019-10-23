@@ -48,7 +48,6 @@ class PantallaCamara extends Pantalla{
         crearHud();
         crearPersonaje();
         crearPausa();
-
     }
 
     private void crearPausa() {
@@ -69,7 +68,6 @@ class PantallaCamara extends Pantalla{
                 //INSTRUCCIONES
                 estadoJuego= EstadoJuego.Jugando;
                 Gdx.input.setInputProcessor(botonesHud);
-
             }
         });
 
@@ -78,6 +76,7 @@ class PantallaCamara extends Pantalla{
 
     private void crearPersonaje() {
         Texture texturaIzAd= new Texture("Imagenes_Final/Personaje_01.png");
+
         //Texture texturaDeAd= new Texture("Personaje_002.png");
         personaje=new Personaje(texturaIzAd,0,ALTO/2-29);
     }
@@ -87,7 +86,6 @@ class PantallaCamara extends Pantalla{
         TextureRegionDrawable btnPausa=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pausa_Boton_00.png")));
         ImageButton btnPause= new ImageButton(btnPausa);
         btnPause.setPosition(0, ALTO-btnPausa.getMinHeight());
-
         //evento boton pausa
 
         btnPause.addListener(new ClickListener(){
@@ -140,19 +138,25 @@ class PantallaCamara extends Pantalla{
         batch.begin();
         batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondo - 1),0);
         batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
+
         personaje.draw(batch);
 
         batch.end();
-
+        if(estadoJuego==estadoJuego.JugandoNivel) {
+            botonesHud.draw();
+        }
+        else{
+            botonesPausa.draw();
+        }
 
     }
 
     private void actualizarPersonaje(float delta) {
-        personaje.mover(2);
+        personaje.mover(1);
     }
 
     private void actualizarCamara() {
-        camera.position.x+= 2;
+        camera.position.x=personaje.getSprite().getX()+3.7f*personaje.getSprite().getWidth();
         camera.update();
         if(camera.position.x-juego.ANCHO/2>texturaFondo.getWidth()*xTexturaFondo){
             xTexturaFondo+=2;
@@ -181,7 +185,7 @@ class PantallaCamara extends Pantalla{
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
