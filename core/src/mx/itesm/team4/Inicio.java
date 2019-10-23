@@ -20,10 +20,10 @@ public class Inicio extends Game {
 	public static final float PISO_DENSITY = 0f;
 
     public static final float RUNNER_DENSITY = 0.5f;
-    public static final float RUNNER_HEIGHT = 2f;
+    public static final float RUNNER_ALTO = 2f;
     public static final float RUNNER_Y = PISO_Y + PISO_ALTO;
     public static final float RUNNER_X = 2f;
-    public static final float RUNNER_WIDTH = 1f;
+    public static final float RUNNER_ANCHO = 1f;
 
     @Override
 	public void create () {
