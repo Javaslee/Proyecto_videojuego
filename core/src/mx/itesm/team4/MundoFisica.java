@@ -11,6 +11,8 @@ public class MundoFisica {
         return new World(Inicio.WORLD_GRAVITY, true);
     }
 
+
+
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Inicio.PISO_X, Inicio.PISO_Y));
@@ -18,6 +20,7 @@ public class MundoFisica {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Inicio.PISO_ANCHO / 2, Inicio.PISO_ALTO / 2);
         body.createFixture(shape, Inicio.PISO_DENSITY);
+        body.setUserData(new PisoUserData());
         shape.dispose();
         return body;
     }
@@ -31,6 +34,7 @@ public class MundoFisica {
         Body body = world.createBody(bodyDef);
         body.createFixture(shape, Inicio.RUNNER_DENSITY);
         body.resetMassData();
+        body.setUserData(new RunnerUserData());
         shape.dispose();
         return body;
     }

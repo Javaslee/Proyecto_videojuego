@@ -176,9 +176,10 @@ public class PantallaNiv1 extends Pantalla {
         }
         borrarPantalla();
         //batch
-        personaje.draw(batch);
         PantallaNiv1.draw();
         PantallaNiv1.act();
+        personaje.draw(batch);
+
         //pistola.draw(batch);
         //enemigo.draw(batch);
         //moneda.draw(batch);
