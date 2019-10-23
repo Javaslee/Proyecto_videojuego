@@ -53,6 +53,7 @@ class PantallaNiveles extends Pantalla {
     private void crearMenu() {
         escenaNiv = new Stage(vista);
 
+
         //Boton regresar
         TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
         TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
@@ -152,6 +153,7 @@ class PantallaNiveles extends Pantalla {
         batch.begin();
         batch.draw(texturaFondo,0,0);
         batch.end();
+        escenaNiv.draw();
 
         escenaNiv.draw();
 
