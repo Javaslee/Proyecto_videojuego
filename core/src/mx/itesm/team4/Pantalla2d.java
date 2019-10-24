@@ -115,16 +115,11 @@ class Pantalla2d extends Pantalla{
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-<<<<<<< Updated upstream
-        // batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondo - 1),0);
-=======
-       // batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondo - 1),0);
->>>>>>> Stashed changes
-        //batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
-
 
         Pantalla2d.draw();
         Pantalla2d.act();
+
+
 
         batch.end();
 

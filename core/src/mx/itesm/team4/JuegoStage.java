@@ -125,9 +125,9 @@ public class JuegoStage extends Stage implements ContactListener {
         if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsPiso(b)) ||
                 (BodyFisica.bodyEsPiso(a) && BodyFisica.bodyEsRunner(b))) {
             runner.aterriza();
-        } else if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsPiso(b)) ||
-                (BodyFisica.bodyEsPiso(a) && BodyFisica.bodyEsRunner(b))) {
-            runner.aterriza();
+        } else if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsEnemigo(b)) ||
+                (BodyFisica.bodyEsEnemigo(a) && BodyFisica.bodyEsRunner(b))) {
+            runner.isHit();
         }
 
     }
