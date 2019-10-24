@@ -17,13 +17,14 @@ public class Inicio extends Game {
 	public static final float PISO_Y = 0;
 	public static final float PISO_ANCHO = 50f;
 	public static final float PISO_ALTO = 4f;
-	public static final float PISO_DENSITY = 0f;
+	public static final float PISO_DENSITY = 2f;
 
-    public static final float RUNNER_DENSITY = 0.5f;
+    public static final float RUNNER_DENSITY = 0.8f;
     public static final float RUNNER_ALTO = 2f;
     public static final float RUNNER_Y = PISO_Y + PISO_ALTO;
     public static final float RUNNER_X = 2f;
     public static final float RUNNER_ANCHO = 1f;
+    public static final Vector2 RUNNER_IMPULSO_SALTO = new Vector2(0, 13f);
 
     @Override
 	public void create () {

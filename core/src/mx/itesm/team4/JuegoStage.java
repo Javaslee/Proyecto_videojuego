@@ -1,19 +1,26 @@
 package mx.itesm.team4;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class JuegoStage extends Stage {
-    // This will be our viewport measurements while working with the debug renderer
+public class JuegoStage extends Stage implements ContactListener {
+
     private static final int VIEWPORT_WIDTH = 20;
     private static final int VIEWPORT_HEIGHT = 13;
 
     private World world;
-    private Body ground;
-    private Body runner;
+    private Piso piso;
+    private Runner runner;
 
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
@@ -21,18 +28,47 @@ public class JuegoStage extends Stage {
     private OrthographicCamera camera;
     private Box2DDebugRenderer renderer;
 
+    private Rectangle screenRightSide;
+
+    private Vector3 touchPoint;
+
     public JuegoStage() {
-        world = MundoFisica.createWorld();
-        ground = MundoFisica.createGround(world);
-        runner = MundoFisica.createRunner(world);
-        renderer = new Box2DDebugRenderer();
+        setUpWorld();
         setupCamera();
+        setupTouchControlAreas();
+        renderer = new Box2DDebugRenderer();
+    }
+
+    private void setUpWorld() {
+        world = MundoFisica.createWorld();
+        world.setContactListener(this);
+        setUpPiso();
+        setUpRunner();
+    }
+
+
+
+    private void setUpPiso() {
+        piso = new Piso(MundoFisica.createGround(world));
+        addActor(piso);
+    }
+
+    private void setUpRunner() {
+        runner = new Runner(MundoFisica.createRunner(world));
+        addActor(runner);
     }
 
     private void setupCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
+    }
+
+    private void setupTouchControlAreas() {
+        touchPoint = new Vector3();
+        screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
+                getCamera().viewportHeight);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -48,7 +84,6 @@ public class JuegoStage extends Stage {
         }
 
         //TODO: Implement interpolation
-
     }
 
     @Override
@@ -56,4 +91,49 @@ public class JuegoStage extends Stage {
         super.draw();
         renderer.render(world, camera.combined);
     }
+    @Override
+    public void beginContact(Contact contact) {
+
+        Body a = contact.getFixtureA().getBody();
+        Body b = contact.getFixtureB().getBody();
+
+        if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsPiso(b)) ||
+                (BodyFisica.bodyEsPiso(a) && BodyFisica.bodyEsRunner(b))) {
+            runner.aterriza();
+        }
+
+    }
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
+    }
+    public boolean touchDown(int x, int y, int pointer, int button) {
+
+        //Coordenadas específicas
+        translateScreenToWorldCoordinates(x, y);
+        if (rightSideTouched(touchPoint.x, touchPoint.y)) {
+            runner.salta();
+        }
+
+        return super.touchDown(x, y, pointer, button);
+    }
+
+    private boolean rightSideTouched(float x, float y) {
+        return screenRightSide.contains(x, y);
+    }
+
+    //funcion para obtener las coordenadas actuales del mundo
+    private void translateScreenToWorldCoordinates(int x, int y) {
+        getCamera().unproject(touchPoint.set(x, y, 0));
+    }
+
+
 }

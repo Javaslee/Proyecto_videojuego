@@ -1,6 +1,7 @@
 package mx.itesm.team4;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -36,6 +37,8 @@ class PantallaCamara extends Pantalla{
     private Personaje personaje;
     private EstadoJuego estadoJuego = EstadoJuego.JugandoNivel;
 
+    private JuegoStage PantallaCamara;
+
 
     public PantallaCamara(Inicio juego) {
         this.juego = juego;
@@ -48,6 +51,12 @@ class PantallaCamara extends Pantalla{
         crearHud();
         crearPersonaje();
         crearPausa();
+        crearElementosMundo();
+
+    }
+
+    private void crearElementosMundo() {
+        PantallaCamara = new JuegoStage();
     }
 
     private void crearPausa() {
@@ -66,11 +75,10 @@ class PantallaCamara extends Pantalla{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
-                estadoJuego= EstadoJuego.Jugando;
+                estadoJuego= EstadoJuego.JugandoNivel;
                 Gdx.input.setInputProcessor(botonesHud);
             }
         });
-
         botonesPausa.addActor(btnRegreso);
     }
 
@@ -99,13 +107,7 @@ class PantallaCamara extends Pantalla{
             }
         });
         botonesHud.addActor(btnPause);
-        botonesHud.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                personaje.saltar(10);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+
         Gdx.input.setInputProcessor(botonesHud);
     }
 
@@ -140,6 +142,8 @@ class PantallaCamara extends Pantalla{
         batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
 
         personaje.draw(batch);
+        PantallaCamara.draw();
+        PantallaCamara.act();
 
         batch.end();
         if(estadoJuego==estadoJuego.JugandoNivel) {
@@ -193,4 +197,5 @@ class PantallaCamara extends Pantalla{
         texturaFondo.dispose();
 
     }
+
 }

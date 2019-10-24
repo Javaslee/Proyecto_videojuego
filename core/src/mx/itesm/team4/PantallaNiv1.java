@@ -146,7 +146,7 @@ public class PantallaNiv1 extends Pantalla {
         botonesHud.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                personaje.saltar(10);
+                personaje.saltar(50);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -176,9 +176,10 @@ public class PantallaNiv1 extends Pantalla {
         }
         borrarPantalla();
         //batch
-        personaje.draw(batch);
         PantallaNiv1.draw();
         PantallaNiv1.act();
+        personaje.draw(batch);
+
         //pistola.draw(batch);
         //enemigo.draw(batch);
         //moneda.draw(batch);

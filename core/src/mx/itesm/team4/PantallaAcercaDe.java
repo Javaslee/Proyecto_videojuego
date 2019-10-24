@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-class PantallaAcercaDe implements Screen {
+class PantallaAcercaDe extends Pantalla {
     private final Inicio inicio;
     //camara
     private OrthographicCamera camara;
@@ -43,19 +43,14 @@ class PantallaAcercaDe implements Screen {
         configurarVista();
         cargarTexturas();
         crearMenu();
-        crearTextoSprite();
     }
 
-    private void crearTextoSprite() {
-        Texture texturaTexto = new Texture("textoAcercaDe.png");
-        textoSprite = new TextoSprite(texturaTexto,(inicio.ANCHO-texturaTexto.getWidth()-texturaTexto.getWidth()/2)+70,inicio.ALTO-texturaTexto.getHeight());
-    }
 
     private void crearMenu() {
         escenaAD=new Stage(vista);
         //boton Regresar a Juego
-        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
-        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
+        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_Boton_00.png")));
+        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_push_Boton_00.png")));
         ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
         btnRegreso.setPosition(0,inicio.ALTO-btnRegresar.getMinHeight());
         //Siguientes Botones
@@ -76,7 +71,7 @@ class PantallaAcercaDe implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo=new Texture("fondoAD.jpg");
+        texturaFondo=new Texture("Imagenes_Final/Pantallas/Pantalla_Acercade_00.png");
     }
 
     private void configurarVista() {
@@ -96,16 +91,11 @@ class PantallaAcercaDe implements Screen {
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
-        batch.draw(texturaFondo,0,0);
-        textoSprite.render(batch);
+        batch.draw(texturaFondo,ANCHO-texturaFondo.getWidth()-100,ALTO-texturaFondo.getHeight()-50);
+        //textoSprite.render(batch);
         batch.end();
 
         escenaAD.draw();
-    }
-
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override
