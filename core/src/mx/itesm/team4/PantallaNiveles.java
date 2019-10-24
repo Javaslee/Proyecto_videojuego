@@ -47,7 +47,7 @@ class PantallaNiveles extends Pantalla {
     }
 
     private void cargarTexturas() {
-        texturaFondo =new Texture("Fondo.png");
+        texturaFondo =new Texture("Imagenes_Final/MenudeNiveles/Pantalla_Niveles_00.png");
     }
 
     private void crearMenu() {
@@ -55,8 +55,8 @@ class PantallaNiveles extends Pantalla {
 
 
         //Boton regresar
-        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
-        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
+        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_Boton_00.png")));
+        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_push_Boton_00.png")));
         ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
         btnRegreso.setPosition(0,inicio.ALTO-btnRegresar.getMinHeight());
 
@@ -71,7 +71,7 @@ class PantallaNiveles extends Pantalla {
         });
 
         //Boton nivel 1
-        TextureRegionDrawable botonNivel1=new TextureRegionDrawable(new TextureRegion(new Texture("nivel1.png")));
+        TextureRegionDrawable botonNivel1=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/MenudeNiveles/Nivel1_00.png")));
         TextureRegionDrawable btnNivel1Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel1_press.png")));
         ImageButton btnNivel1= new ImageButton(botonNivel1,btnNivel1Press);
         btnNivel1.setPosition(100,ALTO/2);
@@ -88,7 +88,7 @@ class PantallaNiveles extends Pantalla {
         });
 
         //Boton nivel 2
-        TextureRegionDrawable botonNivel2=new TextureRegionDrawable(new TextureRegion(new Texture("nivel2.png")));
+        TextureRegionDrawable botonNivel2=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/MenudeNiveles/Nivel2_00.png")));
         TextureRegionDrawable btnNivel2Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel2_press.png")));
         ImageButton btnNivel2= new ImageButton(botonNivel2,btnNivel2Press);
         btnNivel2.setPosition(600,ALTO/2);
@@ -104,7 +104,7 @@ class PantallaNiveles extends Pantalla {
         });
 
         //Boton nivel 3
-        TextureRegionDrawable botonNivel3=new TextureRegionDrawable(new TextureRegion(new Texture("nivel3.png")));
+        TextureRegionDrawable botonNivel3=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/MenudeNiveles/Nivel3_00.png")));
         TextureRegionDrawable btnNivel3Press= new TextureRegionDrawable(new TextureRegion(new Texture("nivel3_press.png")));
         ImageButton btnNivel3= new ImageButton(botonNivel3,btnNivel3Press);
         btnNivel3.setPosition(1000,ALTO/2);
