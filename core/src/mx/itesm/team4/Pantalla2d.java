@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static mx.itesm.team4.Inicio.ALTO;
 
-class PantallaCamara extends Pantalla{
+class Pantalla2d extends Pantalla{
     private final Inicio juego;
     private OrthographicCamera camera;
     private Viewport vista;
@@ -37,8 +37,10 @@ class PantallaCamara extends Pantalla{
     private Personaje personaje;
     private EstadoJuego estadoJuego = EstadoJuego.JugandoNivel;
 
+    private JuegoStage Pantalla2d;
 
-    public PantallaCamara(Inicio juego) {
+
+    public Pantalla2d(Inicio juego) {
         this.juego = juego;
     }
 
@@ -47,42 +49,19 @@ class PantallaCamara extends Pantalla{
         configurarVista();
         cargarTexturas();
         crearHud();
-        crearPersonaje();
-        crearPausa();
+        //crearPersonaje();
+        crearElementosMundo();
 
-
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        //Este inputprocessor no dejaba que se mostrara el piso y el rectángulo, falta agregarle sprites :)
+        //Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
-    private void crearPausa() {
-        botonesPausa= new Stage(vista);
-        //boton Regreso Juego
-        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
-        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
-        ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
-        btnRegreso.setPosition(0,ALTO-btnRegresar.getMinHeight());
-
-        //Siguientes Botones
-
-        //Evento boton regreso
-        btnRegreso.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //INSTRUCCIONES
-                estadoJuego= EstadoJuego.Jugando;
-                Gdx.input.setInputProcessor(botonesHud);
-            }
-        });
-        botonesPausa.addActor(btnRegreso);
+    private void crearElementosMundo() {
+        Pantalla2d = new JuegoStage();
     }
 
-    private void crearPersonaje() {
-        Texture texturaIzAd= new Texture("Imagenes_Final/Personaje_01.png");
 
-        //Texture texturaDeAd= new Texture("Personaje_002.png");
-        personaje=new Personaje(texturaIzAd,0,ALTO/2-29);
-    }
+
 
     private void crearHud() {
         botonesHud =new Stage(vista);
@@ -129,46 +108,24 @@ class PantallaCamara extends Pantalla{
 
     @Override
     public void render(float delta) {
-        if(estadoJuego==estadoJuego.JugandoNivel) {
-            actualizarPersonaje(delta);
-        }
-        actualizarCamara();
+
         borrarPantalla();
 
         // Batch escala de acuerdo a la vista/camara
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondo - 1),0);
-        batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
+        // batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondo - 1),0);
+        //batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
 
-        personaje.draw(batch);
+
+        Pantalla2d.draw();
+        Pantalla2d.act();
 
         batch.end();
-        if(estadoJuego==estadoJuego.JugandoNivel) {
-            botonesHud.draw();
-        }
-        else{
-            botonesPausa.draw();
-        }
 
     }
 
-    private void actualizarPersonaje(float delta) {
-        personaje.mover(1);
-    }
-
-    private void actualizarCamara() {
-        camera.position.x=personaje.getSprite().getX()+3.7f*personaje.getSprite().getWidth();
-        camera.update();
-        if(camera.position.x-juego.ANCHO/2>texturaFondo.getWidth()*xTexturaFondo){
-            xTexturaFondo+=2;
-        }
-        if(camera.position.x-juego.ANCHO/2>texturaFondo.getWidth()*xTexturaFondoDos){
-            xTexturaFondoDos+=2;
-        }
-
-    }
 
     @Override
     public void resize(int width, int height) {
@@ -242,3 +199,4 @@ class PantallaCamara extends Pantalla{
         }
     }
 }
+
