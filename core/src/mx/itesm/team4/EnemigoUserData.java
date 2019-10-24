@@ -1,6 +1,5 @@
 package mx.itesm.team4;
 
-
 import com.badlogic.gdx.math.Vector2;
 
 public class EnemigoUserData extends UserData{
@@ -20,4 +19,3 @@ public class EnemigoUserData extends UserData{
         return linearVelocity;
     }
 }
-

@@ -42,4 +42,6 @@ public enum EnemigoTipo {
     public float getDensity() {
         return density;
     }
+
+
 }
