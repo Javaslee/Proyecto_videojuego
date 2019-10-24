@@ -84,7 +84,6 @@ public class JuegoStage extends Stage implements ContactListener {
         }
 
         //TODO: Implement interpolation
-
     }
 
     @Override
@@ -120,7 +119,6 @@ public class JuegoStage extends Stage implements ContactListener {
 
         //Coordenadas específicas
         translateScreenToWorldCoordinates(x, y);
-
         if (rightSideTouched(touchPoint.x, touchPoint.y)) {
             runner.salta();
         }

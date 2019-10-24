@@ -12,7 +12,6 @@ public class MundoFisica {
     }
 
 
-
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Inicio.PISO_X, Inicio.PISO_Y));

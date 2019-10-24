@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class PantallaTitulo implements Screen {
+public class PantallaTitulo extends Pantalla {
     private final Inicio inicio;
 
     //camara
@@ -25,6 +25,7 @@ public class PantallaTitulo implements Screen {
 
     //fondo
     private Texture texturaFondo;
+    private Texture tex;
 
 
     //escena de menu (botones)
@@ -43,8 +44,6 @@ public class PantallaTitulo implements Screen {
         crearTitulo();
 
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
-
-
     }
 
     @Override
@@ -59,11 +58,6 @@ public class PantallaTitulo implements Screen {
 
         escenaTitulo.draw();
 
-    }
-
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override
@@ -99,6 +93,7 @@ public class PantallaTitulo implements Screen {
 
     private void cargarTexturas() {
         texturaFondo = new Texture("Titulo.png");
+        tex= new Texture("Imagenes_Final/Pantallas/Menu_Pantalla.png");
     }
 
     private void configurarVista() {
@@ -131,6 +126,7 @@ public class PantallaTitulo implements Screen {
 
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            texturaFondo.load(tex.getTextureData());
             inicio.setScreen(new PantallaMenu(inicio));
 
             return true;
