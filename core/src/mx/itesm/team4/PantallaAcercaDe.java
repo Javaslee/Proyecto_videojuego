@@ -32,6 +32,9 @@ class PantallaAcercaDe implements Screen {
 
     //texto Acerca de
     private TextoSprite textoSprite;
+    
+    // Texto de las pantallas
+    private Texto texto;
 
 
     public PantallaAcercaDe(Inicio inicio) {
@@ -43,19 +46,24 @@ class PantallaAcercaDe implements Screen {
         configurarVista();
         cargarTexturas();
         crearMenu();
-        crearTextoSprite();
+        /*crearTextoSprite();*/
+        crearTexto();
     }
 
+    private void crearTexto() {
+        texto = new Texto();
+    }
+    /*
     private void crearTextoSprite() {
         Texture texturaTexto = new Texture("textoAcercaDe.png");
         textoSprite = new TextoSprite(texturaTexto,(inicio.ANCHO-texturaTexto.getWidth()-texturaTexto.getWidth()/2)+70,inicio.ALTO-texturaTexto.getHeight());
-    }
-
+    }*/
+    
     private void crearMenu() {
         escenaAD=new Stage(vista);
         //boton Regresar a Juego
-        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
-        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
+        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_Boton_00.png")));
+        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_push_Boton_00.png")));
         ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
         btnRegreso.setPosition(0,inicio.ALTO-btnRegresar.getMinHeight());
         //Siguientes Botones
@@ -76,7 +84,8 @@ class PantallaAcercaDe implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo=new Texture("fondoAD.jpg");
+        texturaFondo=new Texture("Imagenes_Final/Pantallas/Pantalla_Acercade_00.png");
+
     }
 
     private void configurarVista() {
@@ -97,7 +106,7 @@ class PantallaAcercaDe implements Screen {
 
         batch.begin();
         batch.draw(texturaFondo,0,0);
-        textoSprite.render(batch);
+        /*textoSprite.render(batch);*/
         batch.end();
 
         escenaAD.draw();
