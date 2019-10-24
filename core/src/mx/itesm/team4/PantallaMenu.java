@@ -34,6 +34,7 @@ class PantallaMenu extends Pantalla {
         configurarVista();
         cargarTexturas();
         crearMenu();
+
     }
 
     private void crearMenu() {
