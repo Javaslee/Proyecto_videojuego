@@ -15,7 +15,7 @@ public class Personaje {
         this.texturaDeAd=texturaDeAd;
         this.texturaIzAd=texturaIzAd;
         sprite=new Sprite(this.texturaIzAd);
-        sprite.setPosition(x, y);
+        sprite.setPosition(Inicio.RUNNER_X, Inicio.RUNNER_Y);
     }
 
 

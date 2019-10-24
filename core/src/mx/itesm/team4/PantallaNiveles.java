@@ -85,7 +85,7 @@ class PantallaNiveles extends Pantalla {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
                // inicio.setScreen(new PantallaNiv1(inicio));
-                inicio.setScreen(new PantallaCamara(inicio));
+                inicio.setScreen(new Pantalla2d(inicio));
             }
         });
 
