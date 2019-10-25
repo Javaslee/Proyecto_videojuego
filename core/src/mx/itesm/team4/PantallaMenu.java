@@ -43,7 +43,7 @@ class PantallaMenu extends Pantalla {
         TextureRegionDrawable btnJugar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Boton_00.png")));
         TextureRegionDrawable btnJugarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Push_Boton_00.png")));
         ImageButton btnInicioJuego= new ImageButton(btnJugar,btnJugarOprimido);
-        btnInicioJuego.setPosition(inicio.ANCHO/2-btnInicioJuego.getWidth()/2,ALTO/2+btnInicioJuego.getHeight()/2-50);
+        btnInicioJuego.setPosition(inicio.ANCHO/2-btnInicioJuego.getWidth()/2,ALTO/2+btnInicioJuego.getHeight());
         //Siguientes Botones
         //Evento boton
         btnInicioJuego.addListener(new ClickListener(){
