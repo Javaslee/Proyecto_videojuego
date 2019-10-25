@@ -1,0 +1,54 @@
+PersonajeSp.png
+size: 173, 1101
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Personaje_run1
+  rotate: false
+  xy: 0, 0
+  size: 171, 171
+  orig: 171, 171
+  offset: 0, 0
+  index: -1
+Personaje_Run2
+  rotate: false
+  xy: 0, 171
+  size: 171, 172
+  orig: 171, 172
+  offset: 0, 0
+  index: -1
+Personaje_run3
+  rotate: false
+  xy: 0, 343
+  size: 171, 172
+  orig: 171, 172
+  offset: 0, 0
+  index: -1
+Personaje_run4
+  rotate: false
+  xy: 0, 515
+  size: 171, 171
+  orig: 171, 171
+  offset: 0, 0
+  index: -1
+Personje_run5
+  rotate: false
+  xy: 0, 686
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+Villano_1
+  rotate: false
+  xy: 0, 859
+  size: 170, 106
+  orig: 170, 106
+  offset: 0, 0
+  index: -1
+Villano_2
+  rotate: false
+  xy: 0, 965
+  size: 160, 136
+  orig: 160, 136
+  offset: 0, 0
+  index: -1

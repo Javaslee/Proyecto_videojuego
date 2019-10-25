@@ -1,9 +1,6 @@
 package mx.itesm.team4;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,14 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import static mx.itesm.team4.Inicio.ALTO;
-
 class PantallaCamara extends Pantalla{
     private final Inicio juego;
     private OrthographicCamera camera;
     private Viewport vista;
     //Fondo
     private Texture texturaFondo;
+    private Texture pausa;
 
     private SpriteBatch batch;
     //Escena HUD
@@ -37,6 +33,7 @@ class PantallaCamara extends Pantalla{
     private Personaje personaje;
     private EstadoJuego estadoJuego = EstadoJuego.JugandoNivel;
 
+    private float Dx=5;
 
     public PantallaCamara(Inicio juego) {
         this.juego = juego;
@@ -51,18 +48,23 @@ class PantallaCamara extends Pantalla{
         crearPausa();
 
 
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
     private void crearPausa() {
         botonesPausa= new Stage(vista);
+
         //boton Regreso Juego
-        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar.png")));
-        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_regresar_pressed.png")));
+        TextureRegionDrawable btnRegresar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_Boton_00.png")));
+        TextureRegionDrawable btnRegresarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Return_push_Boton_00.png")));
         ImageButton btnRegreso= new ImageButton(btnRegresar,btnRegresarOprimido);
-        btnRegreso.setPosition(0,ALTO-btnRegresar.getMinHeight());
+        btnRegreso.setPosition(ANCHO/2-200,ALTO/2-70);
 
         //Siguientes Botones
+        //boton play
+        TextureRegionDrawable btnJugarD=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Boton_00.png")));
+        TextureRegionDrawable btnJugarPress=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Push_Boton_00.png")));
+        ImageButton btnJugar=new ImageButton(btnJugarD,btnJugarPress);
+        btnJugar.setPosition(ANCHO/2,ALTO/2-70);
 
         //Evento boton regreso
         btnRegreso.addListener(new ClickListener(){
@@ -70,11 +72,25 @@ class PantallaCamara extends Pantalla{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //INSTRUCCIONES
-                estadoJuego= EstadoJuego.Jugando;
+                juego.setScreen(new PantallaNiveles(juego));
+            }
+        });
+
+        btnJugar.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //INSTRUCCIONES
+                estadoJuego= EstadoJuego.JugandoNivel;
                 Gdx.input.setInputProcessor(botonesHud);
             }
         });
+
+
         botonesPausa.addActor(btnRegreso);
+        botonesPausa.addActor(btnJugar);
+
+
     }
 
     private void crearPersonaje() {
@@ -88,7 +104,7 @@ class PantallaCamara extends Pantalla{
         botonesHud =new Stage(vista);
         TextureRegionDrawable btnPausa=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pausa_Boton_00.png")));
         ImageButton btnPause= new ImageButton(btnPausa);
-        btnPause.setPosition(0, ALTO-btnPausa.getMinHeight());
+        btnPause.setPosition(camera.position.x-camera.position.x, ALTO-btnPausa.getMinHeight());
         //evento boton pausa
 
         btnPause.addListener(new ClickListener(){
@@ -102,19 +118,20 @@ class PantallaCamara extends Pantalla{
             }
         });
         botonesHud.addActor(btnPause);
-      /*  botonesHud.addListener(new ClickListener(){
+        botonesHud.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 personaje.saltar(10);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-        Gdx.input.setInputProcessor(botonesHud);*/
+        Gdx.input.setInputProcessor(botonesHud);
     }
 
 
     private void cargarTexturas() {
         texturaFondo = new Texture("Fondo Largo.png");
+        pausa=new Texture("Imagenes_Final/Pantallas/Pantalla_Pausa_00.png");
     }
 
     private void configurarVista() {
@@ -138,24 +155,30 @@ class PantallaCamara extends Pantalla{
         // Batch escala de acuerdo a la vista/camara
         batch.setProjectionMatrix(camera.combined);
 
+
         batch.begin();
         batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondo - 1),0);
         batch.draw(texturaFondo,texturaFondo.getWidth()*(xTexturaFondoDos - 1),0);
-
+        if (estadoJuego==EstadoJuego.Pausa){
+            batch.draw(pausa,camera.position.x-pausa.getWidth()+ANCHO/3,camera.position.y-pausa.getHeight()+ALTO/2);
+        }
         personaje.draw(batch);
 
         batch.end();
+
         if(estadoJuego==estadoJuego.JugandoNivel) {
             botonesHud.draw();
+            botonesHud.getActors().get(0).setPosition(botonesHud.getActors().get(0).getX() + Dx, botonesHud.getActors().get(0).getY());
+            botonesPausa.getActors().get(0).setPosition(botonesPausa.getActors().get(0).getX() + Dx, botonesPausa.getActors().get(0).getY());
+            botonesPausa.getActors().get(1).setPosition(botonesPausa.getActors().get(1).getX() + Dx, botonesPausa.getActors().get(1).getY());
         }
         else{
             botonesPausa.draw();
         }
-
     }
 
     private void actualizarPersonaje(float delta) {
-        personaje.mover(1);
+        personaje.mover(Dx);
     }
 
     private void actualizarCamara() {
@@ -197,48 +220,4 @@ class PantallaCamara extends Pantalla{
 
     }
 
-    private class ProcesadorEntrada implements InputProcessor {
-        @Override
-        public boolean keyDown(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyTyped(char character) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            personaje.saltar(50);
-            return true;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            personaje.saltar(-50);
-
-            return true;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int amount) {
-            return false;
-        }
-    }
 }
