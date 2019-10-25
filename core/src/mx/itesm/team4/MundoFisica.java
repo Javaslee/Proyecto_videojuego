@@ -33,7 +33,23 @@ public class MundoFisica {
         Body body = world.createBody(bodyDef);
         body.createFixture(shape, Inicio.RUNNER_DENSITY);
         body.resetMassData();
-        body.setUserData(new RunnerUserData());
+        body.setUserData(new RunnerUserData(Inicio.RUNNER_ANCHO, Inicio.RUNNER_ALTO));
+        shape.dispose();
+        return body;
+    }
+
+    public static Body createEnemy(World world) {
+        EnemigoTipo enemyType = RandomUtil.getRandomEnemyType();
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.position.set(new Vector2(enemyType.getX(), enemyType.getY()));
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(enemyType.getWidth() / 2, enemyType.getHeight() / 2);
+        Body body = world.createBody(bodyDef);
+        body.createFixture(shape, enemyType.getDensity());
+        body.resetMassData();
+        EnemigoUserData userData = new EnemigoUserData(enemyType.getWidth(), enemyType.getHeight());
+        body.setUserData(userData);
         shape.dispose();
         return body;
     }

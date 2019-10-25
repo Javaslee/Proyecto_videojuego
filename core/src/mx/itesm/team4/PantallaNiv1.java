@@ -62,7 +62,6 @@ public class PantallaNiv1 extends Pantalla {
         crearHud();
         crearPersonaje();
         crearPistola();
-        crearEnemigo();
         crearMoneda();
         crearMoto();
         crearPausa();
@@ -105,11 +104,6 @@ public class PantallaNiv1 extends Pantalla {
     private void crearMoneda() {
         Texture texturaCoin=new Texture("Imagenes_Final/Moneda_00.png");
         moneda=new Coin(texturaCoin,ANCHO/5-30,ALTO/2-29);
-    }
-
-    private void crearEnemigo() {
-        Texture texturaEne=new Texture("Robot.png");
-        enemigo=new Enemigo(texturaEne,ANCHO/2-30,ALTO/2-29);
     }
 
     private void crearPistola() {
@@ -178,7 +172,7 @@ public class PantallaNiv1 extends Pantalla {
         //batch
         PantallaNiv1.draw();
         PantallaNiv1.act();
-        personaje.draw(batch);
+
 
         //pistola.draw(batch);
         //enemigo.draw(batch);
@@ -193,6 +187,7 @@ public class PantallaNiv1 extends Pantalla {
         else{
             botonesPausa.draw();
         }
+        personaje.draw(batch);
 
     }
 

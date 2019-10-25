@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 
 public class JuegoStage extends Stage implements ContactListener {
 
@@ -29,6 +30,7 @@ public class JuegoStage extends Stage implements ContactListener {
     private Box2DDebugRenderer renderer;
 
     private Rectangle screenRightSide;
+    private Rectangle screenLeftSide;
 
     private Vector3 touchPoint;
 
@@ -44,6 +46,7 @@ public class JuegoStage extends Stage implements ContactListener {
         world.setContactListener(this);
         setUpPiso();
         setUpRunner();
+        createEnemy();
     }
 
 
@@ -66,6 +69,7 @@ public class JuegoStage extends Stage implements ContactListener {
 
     private void setupTouchControlAreas() {
         touchPoint = new Vector3();
+        screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
         screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
                 getCamera().viewportHeight);
         Gdx.input.setInputProcessor(this);
@@ -74,6 +78,13 @@ public class JuegoStage extends Stage implements ContactListener {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        Array<Body> bodies = new Array<Body>(world.getBodyCount());
+        world.getBodies(bodies);
+
+        for (Body body : bodies) {
+            update(body);
+        }
 
         // Fixed timestep
         accumulator += delta;
@@ -84,6 +95,20 @@ public class JuegoStage extends Stage implements ContactListener {
         }
 
         //TODO: Implement interpolation
+    }
+
+    private void update(Body body) {
+        if (!BodyFisica.bodyInBounds(body)) {
+            if (BodyFisica.bodyEsEnemigo(body) && !runner.isHit()) {
+                createEnemy();
+            }
+            world.destroyBody(body);
+        }
+    }
+
+    private void createEnemy() {
+        Enemigo enemy = new Enemigo(MundoFisica.createEnemy(world));
+        addActor(enemy);
     }
 
     @Override
@@ -100,6 +125,9 @@ public class JuegoStage extends Stage implements ContactListener {
         if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsPiso(b)) ||
                 (BodyFisica.bodyEsPiso(a) && BodyFisica.bodyEsRunner(b))) {
             runner.aterriza();
+        } else if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsEnemigo(b)) ||
+                (BodyFisica.bodyEsEnemigo(a) && BodyFisica.bodyEsRunner(b))) {
+            runner.isHit();
         }
 
     }
@@ -121,13 +149,30 @@ public class JuegoStage extends Stage implements ContactListener {
         translateScreenToWorldCoordinates(x, y);
         if (rightSideTouched(touchPoint.x, touchPoint.y)) {
             runner.salta();
+        } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
+            runner.esquivar();
         }
 
         return super.touchDown(x, y, pointer, button);
     }
 
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
+        if (runner.estaEsquivando()) {
+            runner.noEsquivar();
+        }
+
+        return super.touchUp(screenX, screenY, pointer, button);
+    }
+
     private boolean rightSideTouched(float x, float y) {
+
         return screenRightSide.contains(x, y);
+    }
+
+    private boolean leftSideTouched(float x, float y) {
+        return screenLeftSide.contains(x, y);
     }
 
     //funcion para obtener las coordenadas actuales del mundo
