@@ -13,11 +13,14 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 public class JuegoStage extends Stage implements ContactListener {
 
-    private static final int VIEWPORT_WIDTH = 20;
-    private static final int VIEWPORT_HEIGHT = 13;
+    private static final float VIEWPORT_WIDTH = Inicio.ANCHO;
+    private static final float VIEWPORT_HEIGHT = Inicio.ALTO;
 
     private World world;
     private Piso piso;
@@ -33,8 +36,11 @@ public class JuegoStage extends Stage implements ContactListener {
     private Rectangle screenLeftSide;
 
     private Vector3 touchPoint;
+    private float delay = 2;
 
     public JuegoStage() {
+        super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
+                new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
         setUpWorld();
         setupCamera();
         setupTouchControlAreas();
@@ -44,11 +50,15 @@ public class JuegoStage extends Stage implements ContactListener {
     private void setUpWorld() {
         world = MundoFisica.createWorld();
         world.setContactListener(this);
+        setUpBackground();
         setUpPiso();
         setUpRunner();
         createEnemy();
     }
 
+    private void setUpBackground() {
+        addActor(new Background());
+    }
 
 
     private void setUpPiso() {
@@ -101,6 +111,9 @@ public class JuegoStage extends Stage implements ContactListener {
         if (!BodyFisica.bodyInBounds(body)) {
             if (BodyFisica.bodyEsEnemigo(body) && !runner.isHit()) {
                 createEnemy();
+            }else if(BodyFisica.bodyEsEnemigo(body) && runner.isHit()){
+                runner.hit();
+                world.dispose();
             }
             world.destroyBody(body);
         }
@@ -122,12 +135,18 @@ public class JuegoStage extends Stage implements ContactListener {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
-        if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsPiso(b)) ||
+        if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsEnemigo(b)) ||
+                (BodyFisica.bodyEsEnemigo(a) && BodyFisica.bodyEsRunner(b))) {
+            if (runner.isHit()) {
+                return;
+            }
+            world.dispose();
+            //runner.hit();
+
+
+        } else if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsPiso(b)) ||
                 (BodyFisica.bodyEsPiso(a) && BodyFisica.bodyEsRunner(b))) {
             runner.aterriza();
-        } else if ((BodyFisica.bodyEsRunner(a) && BodyFisica.bodyEsEnemigo(b)) ||
-                (BodyFisica.bodyEsEnemigo(a) && BodyFisica.bodyEsRunner(b))) {
-            runner.isHit();
         }
 
     }
@@ -179,6 +198,5 @@ public class JuegoStage extends Stage implements ContactListener {
     private void translateScreenToWorldCoordinates(int x, int y) {
         getCamera().unproject(touchPoint.set(x, y, 0));
     }
-
 
 }

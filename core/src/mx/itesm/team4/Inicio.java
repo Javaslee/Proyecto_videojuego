@@ -35,6 +35,24 @@ public class Inicio extends Game {
 	public static final Vector2 ENEMY_LINEAR_VELOCITY = new Vector2(-10f, 0);
 	public static final float RUNNER_HIT_ANGULAR_IMPULSE = 10f;
 
+	public static final String BACKGROUND = "Fondo Largo.png";
+	public static final String GROUND = "ground.png";
+	public static final float WORLD_TO_SCREEN = 32f;
+
+	public static final String CHARACTERS_ATLAS_PATH = "personajeSp.txt";
+	public static final String[] RUNNER_RUNNING_REGION_NAMES = new String[] {"Personaje_run1", "Personaje_run2", "Personaje_run3", "Personaje_run4"};
+	public static final String RUNNER_DODGING_REGION_NAME = "Personaje_run1";
+	public static final String RUNNER_HIT_REGION_NAME = "Personaje_run3";
+	public static final String RUNNER_JUMPING_REGION_NAME = "Personaje_run2";
+	public static final String RUNNING_SMALL_ENEMY_REGION_NAMES = "Villano_1";
+	public static final String RUNNING_LONG_ENEMY_REGION_NAMES ="Villano_2";
+	public static final String RUNNING_BIG_ENEMY_REGION_NAMES ="Villano_1";
+	public static final String RUNNING_WIDE_ENEMY_REGION_NAMES ="Villano_2";
+	public static final String FLYING_SMALL_ENEMY_REGION_NAMES ="Villano_1";
+	public static final String FLYING_WIDE_ENEMY_REGION_NAMES ="Villano_2";
+
+
+
 	@Override
 	public void create () {
 		setScreen(new PantallaTitulo(this));

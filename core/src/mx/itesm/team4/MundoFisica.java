@@ -19,7 +19,7 @@ public class MundoFisica {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Inicio.PISO_ANCHO / 2, Inicio.PISO_ALTO / 2);
         body.createFixture(shape, Inicio.PISO_DENSITY);
-        body.setUserData(new PisoUserData());
+        body.setUserData(new PisoUserData(Inicio.PISO_ANCHO, Inicio.PISO_ALTO));
         shape.dispose();
         return body;
     }
@@ -48,7 +48,7 @@ public class MundoFisica {
         Body body = world.createBody(bodyDef);
         body.createFixture(shape, enemyType.getDensity());
         body.resetMassData();
-        EnemigoUserData userData = new EnemigoUserData(enemyType.getWidth(), enemyType.getHeight());
+        EnemigoUserData userData = new EnemigoUserData(enemyType.getWidth(), enemyType.getHeight(), enemyType.getRegion());
         body.setUserData(userData);
         shape.dispose();
         return body;

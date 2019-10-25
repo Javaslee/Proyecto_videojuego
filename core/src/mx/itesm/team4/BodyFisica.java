@@ -2,6 +2,7 @@ package mx.itesm.team4;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
+
 public class BodyFisica {
     public static boolean bodyEsRunner(Body body) {
         UserData userData = (UserData) body.getUserData();
@@ -32,4 +33,5 @@ public class BodyFisica {
 
         return userData != null && userData.getEnumsType() == Enums.ENEMIGO;
     }
+
 }

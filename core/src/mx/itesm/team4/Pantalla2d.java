@@ -108,7 +108,9 @@ class Pantalla2d extends Pantalla{
 
     @Override
     public void render(float delta) {
+
         borrarPantalla();
+
         // Batch escala de acuerdo a la vista/camara
         batch.setProjectionMatrix(camera.combined);
 
@@ -117,7 +119,10 @@ class Pantalla2d extends Pantalla{
         Pantalla2d.draw();
         Pantalla2d.act();
 
+
+
         batch.end();
+
     }
 
 

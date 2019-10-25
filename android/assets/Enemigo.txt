@@ -1,0 +1,19 @@
+Enemigo.png
+size: 170, 242
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Villano_1
+  rotate: false
+  xy: 0, 0
+  size: 170, 106
+  orig: 170, 106
+  offset: 0, 0
+  index: -1
+Villano_2
+  rotate: false
+  xy: 0, 106
+  size: 160, 136
+  orig: 160, 136
+  offset: 0, 0
+  index: -1
