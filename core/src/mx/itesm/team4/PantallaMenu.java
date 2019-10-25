@@ -43,7 +43,7 @@ class PantallaMenu extends Pantalla {
         TextureRegionDrawable btnJugar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Boton_00.png")));
         TextureRegionDrawable btnJugarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Push_Boton_00.png")));
         ImageButton btnInicioJuego= new ImageButton(btnJugar,btnJugarOprimido);
-        btnInicioJuego.setPosition(inicio.ANCHO/2-btnInicioJuego.getWidth()/2,ALTO/2+btnInicioJuego.getHeight()/2);
+        btnInicioJuego.setPosition(inicio.ANCHO/2-btnInicioJuego.getWidth()/2,ALTO/2+btnInicioJuego.getHeight());
         //Siguientes Botones
         //Evento boton
         btnInicioJuego.addListener(new ClickListener(){
@@ -57,10 +57,10 @@ class PantallaMenu extends Pantalla {
         });
 
         //boton acerca de
-        TextureRegionDrawable btnAcerDe=new TextureRegionDrawable(new TextureRegion(new Texture("button_acerca-de.png")));
-        TextureRegionDrawable btnAcerDeOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_acerca-de_pressed.png")));
+        TextureRegionDrawable btnAcerDe=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Settings_Boton-00.png")));
+        TextureRegionDrawable btnAcerDeOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Settings_Boton-push_00.png")));
         ImageButton btnInicioAcerca= new ImageButton(btnAcerDe,btnAcerDeOprimido);
-        btnInicioAcerca.setPosition(inicio.ANCHO/2-btnInicioAcerca.getWidth()/2,inicio.ALTO/2);
+        btnInicioAcerca.setPosition(inicio.ANCHO/2-btnInicioAcerca.getWidth()/2,inicio.ALTO/3-btnAcerDe.getMinHeight());
 
         btnInicioAcerca.addListener(new ClickListener(){
             @Override
@@ -76,7 +76,7 @@ class PantallaMenu extends Pantalla {
         TextureRegionDrawable btnInst=new TextureRegionDrawable(new TextureRegion(new Texture("button_instrucciones.png")));
         TextureRegionDrawable btnInstOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("button_instrucciones-pressed.png")));
         ImageButton btnInicioInst= new ImageButton(btnInst,btnInstOprimido);
-        btnInicioInst.setPosition(inicio.ANCHO/2-btnInicioAcerca.getWidth()/2,(inicio.ALTO/2)-150);
+        btnInicioInst.setPosition(inicio.ANCHO/2-btnInicioAcerca.getWidth()/2,inicio.ALTO/2);
 
         btnInicioInst.addListener(new ClickListener(){
             @Override
