@@ -48,8 +48,8 @@ public class PantallaInstrucciones extends Pantalla{
     }
 
     private void crearTextoSprite() {
-        Texture texturaTexto = new Texture("textoInstrucciones.png");
-        textoSprite = new TextoSprite(texturaTexto,(inicio.ANCHO-texturaTexto.getWidth()-texturaTexto.getWidth()/2)+70,inicio.ALTO-texturaTexto.getHeight()-70);
+        Texture texturaTexto = new Texture("Imagenes_Final/Pantallas/Instruciones_00.png");
+        textoSprite = new TextoSprite(texturaTexto,0,0);
     }
 
     private void crearMenu() {
