@@ -3,6 +3,7 @@ package mx.itesm.team4;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -52,9 +53,27 @@ public class Inicio extends Game {
 	public static final String FLYING_WIDE_ENEMY_REGION_NAMES ="Villano_2";
 
 
-
+	//manager
+	private final AssetManager manager=new AssetManager();
 	@Override
 	public void create () {
+
 		setScreen(new PantallaTitulo(this));
 	}
+	public AssetManager getManager() {
+		return manager;
+	}
 }
+/*
+* 1. mensaje tap sobre pantalla titulo
+* 2. Panta cargando
+* 3. tamaño y distribución de botones en menu
+* 4. intercambiar botones de info y ayuda
+* 5. reubicar boton de regreso
+* 6. cambiar boton de instrucciones
+* 7. cambiar instrucciones
+* 8. fotos nuestras en acerca de
+* 9. terminar niveles
+* 10. tamaño de botones
+* 11. transparencia de enemigo y tamaño de ambos
+* 12. agregar de pantalla de perdida y ganar en los niveles*/
