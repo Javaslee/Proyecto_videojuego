@@ -52,43 +52,14 @@ class Pantalla2d extends Pantalla{
         //crearPersonaje();
         crearElementosMundo();
 
-        //Este inputprocessor no dejaba que se mostrara el piso y el rectángulo, falta agregarle sprites :)
-        //Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
     private void crearElementosMundo() {
         Pantalla2d = new JuegoStage();
     }
 
-
-
-
     private void crearHud() {
-        botonesHud =new Stage(vista);
-        TextureRegionDrawable btnPausa=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pausa_Boton_00.png")));
-        ImageButton btnPause= new ImageButton(btnPausa);
-        btnPause.setPosition(0, ALTO-btnPausa.getMinHeight());
-        //evento boton pausa
 
-        btnPause.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                super.clicked(event,x,y);
-                if(estadoJuego==estadoJuego.JugandoNivel){
-                    estadoJuego=estadoJuego.Pausa;
-                    Gdx.input.setInputProcessor(botonesPausa);
-                }
-            }
-        });
-        botonesHud.addActor(btnPause);
-      /*  botonesHud.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                personaje.saltar(10);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
-        Gdx.input.setInputProcessor(botonesHud);*/
     }
 
 
@@ -118,7 +89,6 @@ class Pantalla2d extends Pantalla{
 
         Pantalla2d.draw();
         Pantalla2d.act();
-
 
 
         batch.end();
@@ -153,49 +123,5 @@ class Pantalla2d extends Pantalla{
 
     }
 
-    private class ProcesadorEntrada implements InputProcessor {
-        @Override
-        public boolean keyDown(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyTyped(char character) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            personaje.saltar(50);
-            return true;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            personaje.saltar(-50);
-
-            return true;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int amount) {
-            return false;
-        }
-    }
 }
 
