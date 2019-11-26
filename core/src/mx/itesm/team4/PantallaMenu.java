@@ -26,6 +26,7 @@ class PantallaMenu extends Pantalla {
     private Stage escenaMenu;
 
 
+
     public PantallaMenu(Inicio inicio) {
         this.inicio=inicio;
     }
@@ -35,7 +36,6 @@ class PantallaMenu extends Pantalla {
         configurarVista();
         cargarTexturas();
         crearMenu();
-
     }
 
     private void crearMenu() {
@@ -90,28 +90,33 @@ class PantallaMenu extends Pantalla {
         });
 
         //boton settings
-        TextureRegionDrawable btnSet=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Settings_Boton-00.png")));
-        TextureRegionDrawable btnSetOp= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Settings_Boton-push_00.png")));
-        ImageButton btnSetting= new ImageButton(btnSet,btnSetOp);
-        btnSetting.setPosition(1000,ALTO/2);
+        TextureRegionDrawable btnMuteOFF=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Musica_Boton_00.png")));
+        TextureRegionDrawable btnMuteOn= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Mute_Boton_00.png")));
+        TextureRegionDrawable btnMutePress= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Musica_Boton_Push_00.png")));
+        ImageButton btnMute= new ImageButton(btnMuteOFF,btnMutePress,btnMuteOn);
+        btnMute.setPosition(1000,ALTO/2);
 
-        btnSetting.addListener(new ClickListener() {
+        btnMute.addListener(new ClickListener() {
                                       @Override
                                       public void clicked(InputEvent event, float x, float y) {
                                           super.clicked(event, x, y);
-                                          //INSTRUCCIONES
-                                          inicio.setScreen(new PantallaSettings(inicio));
+                                          if(inicio.isPlaying()){
+                                              inicio.stopMusic();
+                                          }
+                                          else{
+                                              inicio.playMusic();
+                                          }
                                       }
                                   });
-
 
         escenaMenu.addActor(btnInicioJuego);
         escenaMenu.addActor(btnInicioAcerca);
         escenaMenu.addActor(btnInicioInst);
-        escenaMenu.addActor(btnSetting);
+        escenaMenu.addActor(btnMute);
 
         Gdx.input.setInputProcessor(escenaMenu);
     }
+
 
     private void cargarTexturas() {
         texturaFondo=new Texture("Fondo.png");

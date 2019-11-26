@@ -33,8 +33,6 @@ public class PantallaTitulo extends Pantalla {
     private Stage escenaTitulo;
 
 
-
-
     PantallaTitulo(Inicio inicio){
         this.inicio=inicio;
     }
@@ -43,17 +41,8 @@ public class PantallaTitulo extends Pantalla {
         configurarVista();
         cargarTexturas();
         crearTitulo();
-        cargarMusica();
 
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
-    }
-
-    private void cargarMusica() {
-        inicio.getManager().load("Canciones.mp3", Music.class);
-        audioFondo=inicio.getManager().get("Canciones.mp3");
-        audioFondo.setLooping(true);
-        audioFondo.play();
-        audioFondo.setVolume(1F);
     }
 
     @Override
@@ -138,8 +127,8 @@ public class PantallaTitulo extends Pantalla {
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             texturaFondo.load(tex.getTextureData());
             inicio.setScreen(new PantallaMenu(inicio));
-
             return true;
+
         }
 
         @Override
