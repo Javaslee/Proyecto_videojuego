@@ -63,6 +63,8 @@ public class Inicio extends Game {
 	public AssetManager getManager() {
 		return manager;
 	}
+
+
 }
 /*
 * 1. mensaje tap sobre pantalla titulo

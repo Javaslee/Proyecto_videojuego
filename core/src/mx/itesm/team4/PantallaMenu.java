@@ -115,7 +115,6 @@ class PantallaMenu extends Pantalla {
 
     private void cargarTexturas() {
         texturaFondo=new Texture("Fondo.png");
-        inicio.getManager().load("Canciones.mp3", Music.class);
     }
 
     private void configurarVista() {

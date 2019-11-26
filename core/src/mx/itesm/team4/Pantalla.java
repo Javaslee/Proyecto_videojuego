@@ -2,6 +2,7 @@ package mx.itesm.team4;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,6 +21,11 @@ public abstract class Pantalla implements Screen {
     protected SpriteBatch batch;
     //enum de estado de juego
     protected EstadoJuego estadoJuego=EstadoJuego.Jugando;
+
+    //Mute/On Mute
+    protected boolean mute=false;
+    //Musica
+    protected Music audioFondo; //largo, fondo
 
     public Pantalla() {
         // Crea la cámara con las dimensiones del mundo

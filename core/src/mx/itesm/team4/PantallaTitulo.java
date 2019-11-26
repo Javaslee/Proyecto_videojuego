@@ -3,6 +3,7 @@ package mx.itesm.team4;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,8 +43,17 @@ public class PantallaTitulo extends Pantalla {
         configurarVista();
         cargarTexturas();
         crearTitulo();
+        cargarMusica();
 
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
+    }
+
+    private void cargarMusica() {
+        inicio.getManager().load("Canciones.mp3", Music.class);
+        audioFondo=inicio.getManager().get("Canciones.mp3");
+        audioFondo.setLooping(true);
+        audioFondo.play();
+        audioFondo.setVolume(1F);
     }
 
     @Override
