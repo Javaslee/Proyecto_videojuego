@@ -41,7 +41,7 @@ class PantallaMenu extends Pantalla {
     private void crearMenu() {
         escenaMenu=new Stage(vista);
         //boton Inicio Juego
-        TextureRegionDrawable btnJugar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Boton_00.png")));
+        TextureRegionDrawable btnJugar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas de lose o Victory/Play_Boton_00.png")));
         TextureRegionDrawable btnJugarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Push_Boton_00.png")));
         ImageButton btnInicioJuego= new ImageButton(btnJugar,btnJugarOprimido);
         btnInicioJuego.setPosition(50,ALTO/2);
@@ -58,8 +58,8 @@ class PantallaMenu extends Pantalla {
         });
 
         //boton acerca de
-        TextureRegionDrawable btnAcerDe=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/acercade_00.png")));
-        TextureRegionDrawable btnAcerDeOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Acercade_push.png")));
+        TextureRegionDrawable btnAcerDe=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_bnt_00.png")));
+        TextureRegionDrawable btnAcerDeOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_push_Bnt.png")));
         ImageButton btnInicioAcerca= new ImageButton(btnAcerDe,btnAcerDeOprimido);
         btnInicioAcerca.setPosition(300,ALTO/2);
 
@@ -74,8 +74,8 @@ class PantallaMenu extends Pantalla {
         });
 
         //instrucciones boton
-        TextureRegionDrawable btnInst=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_bnt_00.png")));
-        TextureRegionDrawable btnInstOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_push_Bnt.png")));
+        TextureRegionDrawable btnInst=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/acercade_00.png")));
+        TextureRegionDrawable btnInstOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Acercade_push.png")));
         ImageButton btnInicioInst= new ImageButton(btnInst,btnInstOprimido);
         btnInicioInst.setPosition(700,ALTO/2);
 
