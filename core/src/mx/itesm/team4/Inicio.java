@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -55,13 +56,33 @@ public class Inicio extends Game {
 
 	//manager
 	private final AssetManager manager=new AssetManager();
+	private Music audioFondo;
 	@Override
 	public void create () {
 
 		setScreen(new PantallaTitulo(this));
+
+		getManager().load("Canciones.mp3", Music.class);
+		getManager().finishLoading();
+		audioFondo=getManager().get("Canciones.mp3");
+		audioFondo.setLooping(true);
+		audioFondo.play();
 	}
+
+
 	public AssetManager getManager() {
 		return manager;
+	}
+
+	public void playMusic(){
+		audioFondo.play();
+	}
+	public void stopMusic(){
+		audioFondo.stop();
+	}
+
+	public boolean isPlaying(){
+		return audioFondo.isPlaying();
 	}
 
 

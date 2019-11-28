@@ -26,6 +26,7 @@ class PantallaMenu extends Pantalla {
     private Stage escenaMenu;
 
 
+
     public PantallaMenu(Inicio inicio) {
         this.inicio=inicio;
     }
@@ -35,13 +36,12 @@ class PantallaMenu extends Pantalla {
         configurarVista();
         cargarTexturas();
         crearMenu();
-
     }
 
     private void crearMenu() {
         escenaMenu=new Stage(vista);
         //boton Inicio Juego
-        TextureRegionDrawable btnJugar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Boton_00.png")));
+        TextureRegionDrawable btnJugar=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas de lose o Victory/Play_Boton_00.png")));
         TextureRegionDrawable btnJugarOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Play_Push_Boton_00.png")));
         ImageButton btnInicioJuego= new ImageButton(btnJugar,btnJugarOprimido);
         btnInicioJuego.setPosition(50,ALTO/2);
@@ -58,8 +58,8 @@ class PantallaMenu extends Pantalla {
         });
 
         //boton acerca de
-        TextureRegionDrawable btnAcerDe=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/acercade_00.png")));
-        TextureRegionDrawable btnAcerDeOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Acercade_push.png")));
+        TextureRegionDrawable btnAcerDe=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_bnt_00.png")));
+        TextureRegionDrawable btnAcerDeOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_push_Bnt.png")));
         ImageButton btnInicioAcerca= new ImageButton(btnAcerDe,btnAcerDeOprimido);
         btnInicioAcerca.setPosition(300,ALTO/2);
 
@@ -74,8 +74,8 @@ class PantallaMenu extends Pantalla {
         });
 
         //instrucciones boton
-        TextureRegionDrawable btnInst=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_bnt_00.png")));
-        TextureRegionDrawable btnInstOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/infromacion_push_Bnt.png")));
+        TextureRegionDrawable btnInst=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/acercade_00.png")));
+        TextureRegionDrawable btnInstOprimido= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Acercade_push.png")));
         ImageButton btnInicioInst= new ImageButton(btnInst,btnInstOprimido);
         btnInicioInst.setPosition(700,ALTO/2);
 
@@ -90,28 +90,33 @@ class PantallaMenu extends Pantalla {
         });
 
         //boton settings
-        TextureRegionDrawable btnSet=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Settings_Boton-00.png")));
-        TextureRegionDrawable btnSetOp= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Settings_Boton-push_00.png")));
-        ImageButton btnSetting= new ImageButton(btnSet,btnSetOp);
-        btnSetting.setPosition(1000,ALTO/2);
+        TextureRegionDrawable btnMuteOFF=new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Musica_Boton_00.png")));
+        TextureRegionDrawable btnMuteOn= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Mute_Boton_00.png")));
+        TextureRegionDrawable btnMutePress= new TextureRegionDrawable(new TextureRegion(new Texture("Imagenes_Final/Pantallas/Musica_Boton_Push_00.png")));
+        ImageButton btnMute= new ImageButton(btnMuteOFF,btnMutePress,btnMuteOn);
+        btnMute.setPosition(1000,ALTO/2);
 
-        btnSetting.addListener(new ClickListener() {
+        btnMute.addListener(new ClickListener() {
                                       @Override
                                       public void clicked(InputEvent event, float x, float y) {
                                           super.clicked(event, x, y);
-                                          //INSTRUCCIONES
-                                          inicio.setScreen(new PantallaSettings(inicio));
+                                          if(inicio.isPlaying()){
+                                              inicio.stopMusic();
+                                          }
+                                          else{
+                                              inicio.playMusic();
+                                          }
                                       }
                                   });
-
 
         escenaMenu.addActor(btnInicioJuego);
         escenaMenu.addActor(btnInicioAcerca);
         escenaMenu.addActor(btnInicioInst);
-        escenaMenu.addActor(btnSetting);
+        escenaMenu.addActor(btnMute);
 
         Gdx.input.setInputProcessor(escenaMenu);
     }
+
 
     private void cargarTexturas() {
         texturaFondo=new Texture("Fondo.png");

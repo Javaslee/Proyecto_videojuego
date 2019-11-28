@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.assets.AssetManager;
 
 public abstract class Pantalla implements Screen {
     // Atributos disponibles en todas las clases del proyecto
@@ -22,10 +23,9 @@ public abstract class Pantalla implements Screen {
     //enum de estado de juego
     protected EstadoJuego estadoJuego=EstadoJuego.Jugando;
 
-    //Mute/On Mute
-    protected boolean mute=false;
     //Musica
-    protected Music audioFondo; //largo, fondo
+    //protected Music audioFondo; //largo, fondo
+
 
     public Pantalla() {
         // Crea la cámara con las dimensiones del mundo
@@ -51,6 +51,16 @@ public abstract class Pantalla implements Screen {
         Gdx.gl.glClearColor(r,g,b,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
+    /*protected void ponerQuitarMute() {
+
+        if(audioFondo.isPlaying()){
+            audioFondo.stop();
+        }
+        else{
+            audioFondo.play();
+        }
+    }*/
+
     protected enum EstadoJuego{
         Jugando,
         Pausa,
